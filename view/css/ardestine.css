@@ -1,0 +1,7 @@
+@font-face {
+    font-family: 'AGENCYB';
+    src: url('../fonts/AGENCYB.eot');
+    src: url('../fonts/AGENCYB.eot') format('embedded-opentype'),
+         url('../fonts/AGENCYB.woff') format('woff'),
+         url('../fonts/AGENCYB.ttf') format('truetype');
+}
