@@ -1,5 +1,9 @@
-<?php require_once('../src/redirect.php') ?>
-
+<?php require_once '../vendor/autoload.php' ?>
+<?php 
+	use App\classfile\Utility;
+	echo Utility::removeUnderScore("ashik_rahaman");
+	die();
+ ?>
 <!DOCTYPE html>
 <html lang="en-US">
 	<head>
