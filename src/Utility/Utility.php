@@ -1,5 +1,5 @@
 <?php
-	namespace App\classfile;
+	namespace App\Utility;
 	class Utility{
 		static public function redirect_to($link){
 			header("Location: ".$link);
@@ -23,6 +23,10 @@
 			var_dump($str);
 			die();
 		}
+
+		static public function checkInput($value){
+	      return !empty($value);
+	    }
 
 	}
 

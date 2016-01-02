@@ -1,9 +1,16 @@
 <?php require_once '../vendor/autoload.php' ?>
+<?php
+	use App\Utility\Utility; 
+	use App\Login\Login;  
+?>
+
 <?php 
-	use App\classfile\Utility;
-	echo Utility::removeUnderScore("ashik_rahaman");
-	die();
- ?>
+	$a = new Login($_POST);
+	$a->setCheckingFields(array("username","password"));
+	$a->hasPresence();
+	Utility::d($a); 
+
+?>
 <!DOCTYPE html>
 <html lang="en-US">
 	<head>
@@ -34,19 +41,12 @@
 
 	</head>
 	<body style="background: -webkit-linear-gradient(left,rgb(188, 188, 188),#ddd,#ddd,#999);background: -moz-linear-gradient(left,rgb(188, 188, 188),#ddd,#ddd,#999);background: -o-linear-gradient(left,rgb(188, 188, 188),#ddd,#ddd,#999);">
-
-		<?php 
-			$array = $arrayName = array('ashik' => "name" );
-
-			Utility::d($array);
-
-		 ?>
 	<section class="login_section">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6"style="margin:0 auto;">
 					<h3><img src="img/logo.png"alt="logo"> Binary Pos</h3><span>V.1.0.0</span>
-					<form class="form-horizontal" action="welcome.php" method="POST">
+					<form class="form-horizontal" action="index.php" method="post">
 
 						
 
@@ -65,7 +65,7 @@
 					  
 					  <div class="form-group">
 					    <div class="col-sm-offset-6 col-sm-6">
-					      <a href="welcome.php"><input name="signIn" type="submit" class="btn navbar-inverse singin" value="Sign in"></a>
+					    	<input name="login" type="submit" class="btn navbar-inverse singin" value="Sign in">
 					    </div>
 					  </div>
 					</form>
