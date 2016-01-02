@@ -38,7 +38,12 @@
 				 $('nav').removeClass('fixed');
 			 }
 		});
-	});
+	});/*end scroll*/
+   $('#myModal').on('shown.bs.modal', function () {
+	  $('#myInput').focus()
+	});/*end modal*/
+
 </script>
+
 </body>
 </html>

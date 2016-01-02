@@ -1,14 +1,5 @@
 	<!-- link include -->
 	<?php include('includes/all_link_body.php'); ?>
-<script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function(){
-        	
-		    $("#btn3").click(function(){var i=1;
-		        $("#test3").val(var i++);
-		    });
-		});
-    </script>
 
 
 <header class="header_section">
@@ -18,7 +9,7 @@
 				<?php include('includes/header_top.php'); ?>
 
 				<div class="sales_point">
-					<h2>sales point</h2>
+					<h2>sales order</h2>
 				</div><!--  -->
 				 <div class="container">
 					<?php include('includes/admin_navigationbar.php'); ?>
@@ -46,9 +37,9 @@
 								<div class="view_invoice">
 									
 									<div class="form-group">
-									    <label for="inputInvoice3" class="col-sm-4 no_padding control-label">Invoice No. :</label>
+									    <label for="inputInvoice3" class="col-sm-4 no_padding control-label">Order No. :</label>
 									    <div class="col-sm-8">
-									      <input  id="test3" name="invoiceNumber" type="text" class="form-control" id="inputInvoice3" placeholder="Invoice No." >
+									      <input name="invoiceNumber" type="text" class="form-control" id="inputInvoice3" placeholder="Invoice No.">
 									    </div>
 									 </div>
 								</div>
@@ -83,10 +74,10 @@
 							</div><!--  -->
 							<div class="notes">
 								<div class="form-group">
-								    <label for="inputcustomerNotes3" class="col-sm-3 no_padding control-label">Notes : </label>
-								    <div class="col-sm-9">
-								      <textarea name="customerAddress" class="form-control" rows="3"></textarea>
-								    </div>
+								    <label for="inputcustomquotation3" class="col-sm-4 no_padding control-label">Quotation Ref : </label>
+								    <div class="col-sm-8">
+									      <input name="quotationRef" type="text" class="form-control" id="inputquotation3" placeholder="Quotation Ref">
+									    </div>
 								 </div>
 							</div><!--  -->
 							<div class="view_center_folwchart">

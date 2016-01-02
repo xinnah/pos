@@ -30,11 +30,11 @@
 							<ul>
 								<li> <button class="btn btn-info" style="width:60%;margin: 1px 0;"><a href="welcome.php">go to pos</a> </button></li>
 								<li><button class="btn btn-info" style="width:60%;margin: 1px 0;"><a href="add_quotation.php">add new quotation</a> </button></li>
-								<li><button class="btn btn-info" style="width:60%;margin: 1px 0;"><a href="#">search quotation</a> </button></li>
+								<li><button class="btn btn-info" style="width:60%;margin: 1px 0;"><a href="search_quotation.php">search quotation</a> </button></li>
 								<br>
-								<li><button class="btn btn-info" style="width:60%;margin: 1px 0;"><a href="#">add sales order</a> </button></li>
-								<li><button class="btn btn-info" style="width:60%;margin: 1px 0;"><a href="#">generate invoice</a> </button></li>
-								<li><button class="btn btn-info" style="width:60%;margin: 1px 0;"><a href="#">delivery against orders</a> </button></li>
+								<li><button class="btn btn-info" style="width:60%;margin: 1px 0;"><a href="sales_order.php">add sales order</a> </button></li>
+								<li><button class="btn btn-info" style="width:60%;margin: 1px 0;"><a href="generate_invoice.php">generate invoice</a> </button></li>
+								<li><button class="btn btn-info" style="width:60%;margin: 1px 0;"><a href="delivery_against_order.php">delivery against orders</a> </button></li>
 								<li><button class="btn btn-info" style="width:60%;margin: 1px 0;"><a href="#">outstanding orders</a> </button></li>
 								<li><button class="btn btn-info" style="width:60%;margin: 1px 0;"><a href="#">search sales orders</a> </button></li>
 								<br>

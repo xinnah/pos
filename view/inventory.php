@@ -56,7 +56,7 @@
 									    <div class="panel-heading" role="tab" id="headingOne">
 									      <h4 class="panel-title">
 									        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-									          <h4>low stock</h4>
+									          <h4 style="text-align:center">low stock</h4>
 									        </a>
 									      </h4>
 									    </div>

@@ -16,7 +16,7 @@
 		    	
 		      <ul class="nav navbar-nav">
 		      	
-		        <li class=""><a href="#" data-toggle="tooltip" data-placement="bottom" title="Add"><img src="img/icon/add.png"> </a></li>
+		        <li class=""><a id="btn3" href="" data-toggle="tooltip" data-placement="bottom" title="Add"><img src="img/icon/add.png"> </a></li>
 		        <li class=""><a href="#" data-toggle="tooltip" data-placement="bottom" title="Delete"><img src="img/icon/Files-Delete-File-icon.png"></a></li>
 		        <li class=""><a href="replacement.php" data-toggle="tooltip" data-placement="bottom" title="Replacement"><img src="img/icon/refresh-icon.png"></a></li>
 		        <li><h3 class="bdt_price">BDT 0000000.00</h3></li>
@@ -27,7 +27,7 @@
 		        <li class=""><a href="#" data-toggle="tooltip" data-placement="bottom" title="Barcode"><img src="img/icon/barcode-scanner_318-47243.png"></a></li>
 		        <li class=""><a href="#" data-toggle="tooltip" data-placement="bottom" title="View"><img src="img/icon/86-Folder-512.png"></a></li>
 		        <li class=""><a href="#" data-toggle="tooltip" data-placement="bottom" title="Search"><img src="img/icon/search.png"></a></li>
-		        <li class=""><a href="#" data-toggle="tooltip" data-placement="bottom" title="Edit"><img src="img/icon/file-edit white.png"></a></li>
+		        <!-- <li class=""><a href="#" data-toggle="tooltip" data-placement="bottom" title="Edit"><img src="img/icon/file-edit white.png"></a></li> -->
 		        
 		      </ul>
 		    </div><!-- /.navbar-collapse -->
