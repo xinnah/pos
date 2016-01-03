@@ -1,7 +1,7 @@
 <?php
 	namespace App\Utility;
 	class Utility{
-		static public function redirect_to($link){
+		static public function redirectTo($link){
 			header("Location: ".$link);
 			exit();
 		}

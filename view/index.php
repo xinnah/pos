@@ -1,14 +1,34 @@
+<?php //ini_set("display_errors", "off") ?>
+
 <?php require_once '../vendor/autoload.php' ?>
 <?php
+	use App\Connection\Connection; 
 	use App\Utility\Utility; 
 	use App\Login\Login;  
+
+
+	$dbConnect = new Connection;
+	// Utility::dd($dbConnect);
+	$message = isset($dbConnect->message) ? $dbConnect->message : "";
 ?>
 
-<?php 
-	$a = new Login($_POST);
-	$a->setCheckingFields(array("username","password"));
-	$a->hasPresence();
-	Utility::d($a); 
+<?php
+	if(isset($dbConnect) && $_SERVER["REQUEST_METHOD"] == "POST" && isset($_REQUEST["login"])){
+		if(!empty($_REQUEST["username"]) && !empty($_REQUEST["password"])){
+			$newUser = new Login($_POST);
+			$dbUser = $newUser->loginQuery();
+			if($dbUser){
+				if($dbUser["username"] == $newUser->username && $dbUser["password"] == $newUser->password ){
+					Utility::redirectTo("welcome.php");
+				}
+			}else{
+				$message = "Error...Username/Password doesn't match!";
+			}
+		}else{
+			$message = "Username/Password can't be empty";
+		}
+	} 
+	
 
 ?>
 <!DOCTYPE html>
@@ -47,9 +67,7 @@
 				<div class="col-md-6"style="margin:0 auto;">
 					<h3><img src="img/logo.png"alt="logo"> Binary Pos</h3><span>V.1.0.0</span>
 					<form class="form-horizontal" action="index.php" method="post">
-
-						
-
+					<div class="message message_error"><?php echo $message = isset($message) ? $message : "" ?></div>
 					  <div class="form-group">
 					    <label for="inputEmail3" class="col-sm-6 control-label">User Name:</label>
 					    <div class="col-sm-6">
