@@ -4,7 +4,7 @@
 <?php
 	use App\Connection\Connection; 
 	use App\Utility\Utility; 
-	use App\Login\Login;  
+	use App\LoginRegistration\LoginRegistration;  
 
 
 	$dbConnect = new Connection;
@@ -15,7 +15,7 @@
 <?php
 	if(isset($dbConnect) && $_SERVER["REQUEST_METHOD"] == "POST" && isset($_REQUEST["login"])){
 		if(!empty($_REQUEST["username"]) && !empty($_REQUEST["password"])){
-			$newUser = new Login($_POST);
+			$newUser = new LoginRegistration($_POST);
 			$dbUser = $newUser->loginQuery();
 			if($dbUser){
 				if($dbUser["username"] == $newUser->username && $dbUser["password"] == $newUser->password ){
