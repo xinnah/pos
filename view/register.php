@@ -11,8 +11,6 @@
 ?>
 
 <?php
-	
-	
 
 	if(isset($dbConnect) && $_SERVER["REQUEST_METHOD"] == "POST" && isset($_REQUEST["signup"])){
 		if(!empty($_REQUEST["username"]) && !empty($_REQUEST["password"])){
@@ -63,7 +61,7 @@
 										<div class="form-group">
 										    <label for="inputCustomerName3" class="col-sm-3 no_padding control-label">User Name : </label>
 										    <div class="col-sm-9">
-										      <input name="username" type="text" class="form-control" id="inputCustomerName3" placeholder="User Name ">
+										      <input name="username" type="text" class="form-control" id="inputCustomerName3" placeholder="User Name " value="<?php if(isset($_POST["username"])){echo $_POST["username"];} ?>">
 										    </div>
 										 </div>
 									</div>

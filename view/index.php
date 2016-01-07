@@ -18,11 +18,13 @@
 			$newUser = new LoginRegistration($_POST);
 			$dbUser = $newUser->loginQuery();
 			if($dbUser){
-				if($dbUser["username"] == $newUser->username && $dbUser["password"] == $newUser->password ){
-					Utility::redirectTo("welcome.php");
+				if($dbUser["username"] == $newUser->username && password_verify($newUser->password,$dbUser["password"])){
+					Utility::redirect("welcome.php");
+				}else{
+					$message = "Error...Username/Password doesn't match!";
 				}
 			}else{
-				$message = "Error...Username/Password doesn't match!";
+				$message = "Error...There is no user like this!";
 			}
 		}else{
 			$message = "Username/Password can't be empty";
@@ -71,7 +73,7 @@
 					  <div class="form-group">
 					    <label for="inputEmail3" class="col-sm-6 control-label">User Name:</label>
 					    <div class="col-sm-6">
-					      <input name="username" type="text" class="form-control" id="inputEmail3" placeholder="User Id"> <i class="fa fa-user email"></i> 
+					      <input name="username" type="text" class="form-control" id="inputEmail3" placeholder="User Name" value="<?php if(isset($_POST["username"])){echo $_POST["username"];} ?>"> <i class="fa fa-user email"></i> 
 					    </div>
 					  </div>
 					  <div class="form-group">

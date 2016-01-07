@@ -23,8 +23,6 @@ class LoginRegistration{
       $dbConnect = new Connection();
       $query = "SELECT * FROM admin WHERE ";
       $query .= "username = '{$this->username}' "; 
-      $query .= "AND ";
-      $query .= "password = '{$this->password}'";
       $result = mysqli_query($dbConnect->connection,$query);
       if($result){
         return mysqli_fetch_assoc($result);
@@ -37,15 +35,13 @@ class LoginRegistration{
       $dbConnect = new Connection();
       $this->password = password_hash($this->password,PASSWORD_BCRYPT);
       $query = "SELECT * FROM admin WHERE ";
-      $query .= "username = '{$this->username}' "; 
-      $query .= "AND ";
-      $query .= "password = '{$this->password}'";
+      $query .= "username = '{$this->username}' ";
       $result = mysqli_query($dbConnect->connection,$query);
-      if($result){
+      if($result && mysqli_affected_rows($dbConnect->connection) == 1){
         return "This user is alredy Exist!";
-      }elseif(!$result){
+      }elseif(mysqli_affected_rows($dbConnect->connection) == 0){
         $query = "INSERT INTO admin(username,password ";
-        $query .= ") VALUES ( ";
+        $query .= ")VALUES( ";
         $query .= "'{$this->username}','{$this->password}'";
         $query .= ")";
         $addUser = mysqli_query($dbConnect->connection,$query);

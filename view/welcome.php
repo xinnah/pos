@@ -46,8 +46,8 @@
 								<div class="view_invoice">
 									
 									<div class="form-group">
-									    <label for="inputInvoice3" class="col-sm-4 no_padding control-label">Invoice No. :</label>
-									    <div class="col-sm-8">
+									    <label for="inputInvoice3" class="col-sm-3 no_padding control-label">Invoice No. :</label>
+									    <div class="col-sm-9">
 									      <input  id="test3" name="invoiceNumber" type="text" class="form-control" id="inputInvoice3" placeholder="Invoice No." >
 									    </div>
 									 </div>
