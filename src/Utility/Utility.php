@@ -24,8 +24,18 @@
 			die();
 		}
 
-		static public function checkInput($value){
-	      return !empty($value);
+		static public function validateInput($data = false){
+		    $errors = array();
+			foreach ($data as $key => $value) {
+				if(empty($_REQUEST[$key])){
+					if($key == "name"){
+						continue;
+					}else{
+						$errors[$key] = str_replace("_", " ",$key)." can't be empty";
+						return $errors;
+					}
+				}
+			}
 	    }
 
 	}

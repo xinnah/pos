@@ -16,10 +16,10 @@
 		    	
 		      <ul class="nav navbar-nav">
 		      	
-		        <li class=""><a id="btn3" href="" data-toggle="tooltip" data-placement="bottom" title="Add"><img src="img/icon/add.png"> </a></li>
+		        <li class=""><a  id="like" data-toggle="tooltip" data-placement="bottom" title="Add"><img src="img/icon/add.png"> </a></li>
 		        <li class=""><a href="#" data-toggle="tooltip" data-placement="bottom" title="Delete"><img src="img/icon/Files-Delete-File-icon.png"></a></li>
 		        <li class=""><a href="replacement.php" data-toggle="tooltip" data-placement="bottom" title="Replacement"><img src="img/icon/refresh-icon.png"></a></li>
-		        <li><h3 class="bdt_price">BDT 0000000.00</h3></li>
+		        <li><h3 class="bdt_price">BDT <p class="navbar_total_price" name="spTotalPrice"><b><output id="total5" for="change">0</output></b></p>.00</h3></li>
 		      </ul>
 		      
 		      <ul class="nav navbar-nav navbar-right">

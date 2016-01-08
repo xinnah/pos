@@ -35,7 +35,7 @@ body{background: #33004B;color: #fff;font-family: 'AGENCYB';}
 .navbar-nav>li{margin-right: 37px;}
 .navbar-default .navbar-nav>li>a {color: #777;margin: 0;padding: 0;}
 .nav>li>a>img {width: 55px;}
-.bdt_price{/*margin: 0px 70px; */margin:0px 120px;background: #000;padding: 5px 30px;font-size: 43px;}
+.bdt_price{/*margin: 0px 70px; */margin:0px 153px;background: #000;padding: 5px 30px;font-size: 43px;}
 
 .view_container_content{width: 100%;overflow: hidden;padding: 30px 0;}
 .view_container_content .view_top_date{margin: 0px 0;overflow: hidden;margin-bottom: 15px;}
@@ -75,6 +75,9 @@ body{background: #33004B;color: #fff;font-family: 'AGENCYB';}
 .view_container_content .view_bottom_folwchart table tr td{border: 1px solid #ccc;text-align: center;padding: 10px 0;}*/
 .main_footer_section{background: #000;width: 100%;padding: 5px 0;}
 .main_footer_section p{font-family: 'AGENCYB';}
+
+.navbar_total_price{display: inline-block;}
+.navbar_total_price output{display: inline-block;font-size: 43px;padding: 0;color: #fff;}
 
 /*======== sales manager page ================*/
 .sales_manager_content{width: 100%;overflow: hidden;margin-bottom: 80px;}
