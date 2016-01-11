@@ -1,26 +1,27 @@
 <?php
-  namespace App\Invoice;
+  namespace App\Quotation;
   require_once '../vendor/autoload.php';
 
   use App\Utility\Utility;
   use App\Connection\Connection;
 
-class Invoice{
-		public $sl_no = "";
-		public $customer_id = "";
-		public $invoice_no = "";
-		public $product_description = "";
-		public $uom = "";
-		public $cost_per_unit = "";
-		public $price_per_unit = "";
-		public $quantity = "";
-		public $amount = "";
-		public $vat = "";
-		public $delivery_charge = "";
-		public $total = "";
-		public $paid = "";
-		public $due = "";
-		public $notes = "";
+class Quotation{
+		public $sl_no;
+		public $customer_id;
+		public $quotation_no;
+		public $product_description;
+		public $uom;
+		public $cost_per_unit;
+		public $price_per_unit;
+		public $quantity;
+		public $amount;
+		public $vat;
+		public $delivery_charge;
+		public $total;
+		public $paid;
+		public $sales_order_no;
+		public $invoice_no;
+		public $delivery_receipt_no;
 
 		// Customer info comes from costomer table
 		public $customer_name; 
@@ -32,13 +33,13 @@ class Invoice{
 	}
 
 
-	public function createInvoice(){
+	public function createQuotation(){
 		$dbConnect = new Connection();
 
-		$query = "INSERT INTO invoice( ";
+		$query = "INSERT INTO quotation( ";
 		$query .="`sl_no`, ";
 		$query .="`customer_id`, ";
-		$query .="`invoice_no`, ";
+		$query .="`quotation_no`, ";
 		$query .="`product_description`, ";
 		$query .="`uom`, ";
 		$query .="`cost_per_unit`, ";
@@ -49,12 +50,13 @@ class Invoice{
 		$query .="`delivery_charge`, ";
 		$query .="`total`, ";
 		$query .="`paid`, ";
-		$query .="`due`, ";
-		$query .="`notes` ";
+		$query .="`sales_order_no`, ";
+		$query .="`invoice_no`, ";
+		$query .="`delivery_receipt_no` ";
 		$query .= ")VALUES( ";
 		$query .="'{$this->sl_no}', ";
 		$query .="'{$this->customer_id}', ";
-		$query .="'{$this->invoice_no}', ";
+		$query .="'{$this->quotation_no}', ";
 		$query .="'{$this->product_description}', ";
 		$query .="'{$this->uom}', ";
 		$query .="'{$this->cost_per_unit}', ";
@@ -65,15 +67,16 @@ class Invoice{
 		$query .="'{$this->delivery_charge}', ";
 		$query .="'{$this->total}', ";
 		$query .="'{$this->paid}', ";
-		$query .="'{$this->due}', ";
-		$query .="'{$this->notes}' ";
+		$query .="'{$this->sales_order_no}', ";
+		$query .="'{$this->invoice_no}', ";
+		$query .="'{$this->delivery_receipt_no}' ";
         $query .= ")";
 
 
 		$customer_query = "";
 
-        $createInvoice = mysqli_query($dbConnect->connection,$query);
-        if($createInvoice){
+        $createQuotation = mysqli_query($dbConnect->connection,$query);
+        if($createQuotation){
           return "Invoice has created successfully";
         }else{
           return "Invoice Creation Failed";
@@ -84,15 +87,15 @@ class Invoice{
 	public function view(){
 
 		$dbConnect = new Connection();
-		$invoice = array();
+		$quotation = array();
 
-		$query = "SELECT * FROM `invoice`";
+		$query = "SELECT * FROM `quotation`";
         $result = mysql_query($query);
         
         while($row = mysql_fetch_object($result)){
-            $invoice[] = $row;
+            $quotation[] = $row;
         }
-        return $invoice;
+        return $quotation;
 
 	}
 
@@ -100,13 +103,13 @@ class Invoice{
 
 		$dbConnect = new Connection();
 
-		$query = "UPDATE `invoice` SET ";
+		$query = "UPDATE `quotation` SET ";
 		$query .="`sl_no`= ";
 		$query .="'{$this->sl_no}', ";
 		$query .="`customer_id`= ";
 		$query .="'{$this->customer_id}', ";
-		$query .="`invoice_no`= ";
-		$query .="'{$this->invoice_no}', ";
+		$query .="`quotation_no`= ";
+		$query .="'{$this->quotation_no}', ";
 		$query .="`product_description`= ";
 		$query .="'{$this->product_description}', ";
 		$query .="`uom`= ";
@@ -127,16 +130,18 @@ class Invoice{
 		$query .="'{$this->total}', ";
 		$query .="`paid`= ";
 		$query .="'{$this->paid}', ";
-		$query .="`due`= ";
-		$query .="'{$this->due}', ";
-		$query .="`notes`= ";
-		$query .="'{$this->notes}' ";
+		$query .="`sales_order_no`= ";
+		$query .="'{$this->sales_order_no}', ";
+		$query .="`invoice_no`= ";
+		$query .="'{$this->invoice_no}', ";
+		$query .="`delivery_receipt_no`= ";
+		$query .="'{$this->delivery_receipt_no}' ";
 
-        $updateInvoice = mysqli_query($dbConnect->connection,$query);
-        if($updateInvoice){
-          return "Invoice has updated successfully";
+        $updateQuotation = mysqli_query($dbConnect->connection,$query);
+        if($updateQuotation){
+          return "Quotation has updated successfully";
         }else{
-          return "Invoice Updatation Failed";
+          return "Quotation Updatation Failed";
         }
 
 	}
@@ -147,14 +152,14 @@ class Invoice{
 
 		$dbConnect = new Connection();
 		if(is_null($id)){
-            return "Select a invoice to Delete";
+            return "Select a quotation to Delete";
         }else{
-        	$query = "DELETE FROM `invoice` WHERE `id` = ".$id;
+        	$query = "DELETE FROM `quotation` WHERE `id` = ".$id;
         	$result = mysql_query($query);
         	if($result && mysqli_affected_rows($dbConnect->connection) == 1){
-        		return "Invoice has deleted successfully";
+        		return "Quotation has deleted successfully";
         	}else{
-        		return "Invoice deletation Failed";
+        		return "Quotation deletation Failed";
         	}
         }
 	}

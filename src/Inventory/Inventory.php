@@ -104,6 +104,93 @@ class Inventory{
 	}
 
 
+	public function view(){
+
+		$dbConnect = new Connection();
+		$inventory = array();
+
+		$query = "SELECT * FROM `inventory`";
+        $result = mysql_query($query);
+        
+        while($row = mysql_fetch_object($result)){
+            $inventory[] = $row;
+        }
+        return $inventory;
+
+	}
+
+	public function update(){
+
+		$dbConnect = new Connection();
+
+		$query = "UPDATE `inventory` SET ";
+		$query .="`sl_no`= ";
+		$query .="'{$this->sl_no}', ";
+		$query .="`product_code`= ";
+		$query .="'{$this->product_code}', ";
+		$query .="`barcode`= ";
+		$query .="'{$this->barcode}', ";
+		$query .="`product_name`= ";
+		$query .="'{$this->product_name}', ";
+		$query .="`catagory`= ";
+		$query .="'{$this->catagory}', ";
+		$query .="`band`= ";
+		$query .="'{$this->band}', ";
+		$query .="`model`= ";
+		$query .="'{$this->model}', ";
+		$query .="`specification`= ";
+		$query .="'{$this->specification}', ";
+		$query .="`uom`= ";
+		$query .="'{$this->uom}', ";
+		$query .="`purchase_order_ref`= ";
+		$query .="'{$this->purchase_order_ref}', ";
+		$query .="`purchase_cost_per_unit`= ";
+		$query .="'{$this->purchase_cost_per_unit}', ";
+		$query .="`sales_price_per_unit`= ";
+		$query .="'{$this->sales_price_per_unit}', ";
+		$query .="`warehouse_stock`= ";
+		$query .="'{$this->warehouse_stock}', ";
+		$query .="`shop_stock`= ";
+		$query .="'{$this->shop_stock}', ";
+		$query .="`total_stock`= ";
+		$query .="'{$this->total_stock}', ";
+		$query .="`stock_value_on_purchase`= ";
+		$query .="'{$this->stock_value_on_purchase}', ";
+		$query .="`stock_value`= ";
+		$query .="'{$this->stock_value}', ";
+		$query .="`stock_value_on_sale`= ";
+		$query .="'{$this->stock_value_on_sale}', ";
+		$query .="`added_by`= ";
+		$query .="'{$this->added_by}' ";
+
+        $updateInventory = mysqli_query($dbConnect->connection,$query);
+        if($updateInventory){
+          return "Inventory has updated successfully";
+        }else{
+          return "Inventory Updatation Failed";
+        }
+
+	}
+
+
+
+	public function delete($id){
+
+		$dbConnect = new Connection();
+		if(is_null($id)){
+            return "Select a inventory to Delete";
+        }else{
+        	$query = "DELETE FROM `inventory` WHERE `id` = ".$id;
+        	$result = mysql_query($query);
+        	if($result && mysqli_affected_rows($dbConnect->connection) == 1){
+        		return "Inventory has deleted successfully";
+        	}else{
+        		return "Inventory deletation Failed";
+        	}
+        }
+	}
+
+
 
 
 
