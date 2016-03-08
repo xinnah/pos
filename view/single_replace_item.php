@@ -1,0 +1,457 @@
+<?php
+error_reporting(0);
+    session_start();
+    include_once $_SERVER['DOCUMENT_ROOT'].DIRECTORY_SEPARATOR.'pos'.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'autoload.php';
+	if(!isset($_SESSION["username"])){
+		header("Location: index.php");
+	}
+
+ ?>
+<?php 
+	use App\Utility\Utility;
+	use App\Replacement\Replacement;
+	use App\Customer\Customer;
+
+	$customer = new Customer;
+	// if(isset($_REQUEST["submit"])){
+ //    	Utility::dd($_REQUEST);
+ //    }
+
+	// Utility::dd($_REQUEST);
+    $replacement_data = array();
+    if(count($_REQUEST) > 0){
+	    foreach ($_REQUEST as $key => $value) {
+
+	        if($key == "barcode"){
+	          foreach ($_REQUEST[$key] as $customer_key => $customer_value) {
+	            $replacement_data[$key] = implode(" , ", $_REQUEST[$key]);;
+	          }
+	        }elseif($key == "product_description"){
+	          foreach ($_REQUEST[$key] as $customer_key => $customer_value) {
+	            $replacement_data[$key] = implode(" , ", $_REQUEST[$key]);;
+	          }
+	        }elseif($key == "uom"){
+	          foreach ($_REQUEST[$key] as $customer_key => $customer_value) {
+	            $replacement_data[$key] = implode(" , ", $_REQUEST[$key]);;
+	          }
+	        }elseif($key == "cost_per_unit"){
+	          foreach ($_REQUEST[$key] as $customer_key => $customer_value) {
+	            $replacement_data[$key] = implode(" , ", $_REQUEST[$key]);;
+	          }
+	        }elseif($key == "price_per_unit"){
+	          foreach ($_REQUEST[$key] as $customer_key => $customer_value) {
+	            $replacement_data[$key] = implode(" , ", $_REQUEST[$key]);;
+	          }
+	        }elseif($key == "quantity"){
+	          foreach ($_REQUEST[$key] as $customer_key => $customer_value) {
+	            $replacement_data[$key] = implode(" , ", $_REQUEST[$key]);;
+	          }
+	        }elseif($key == "amount"){
+	          foreach ($_REQUEST[$key] as $customer_key => $customer_value) {
+	            $replacement_data[$key] = implode(" , ", $_REQUEST[$key]);;
+	          }
+	        }else{
+	          $replacement_data[$key] = $value;
+	        }
+	    }
+    }
+
+    if(isset($replacement_data["customer_id"])){
+    	$customer_info = $customer->show_customer($replacement_data["customer_id"]);
+    }
+
+    
+    // Utility::dd($replacement_data);
+    // $obj = new Replacement;
+    // $obj->create_replacement($_REQUEST);
+?>
+	<!-- link include -->
+	<?php include('includes/all_link_body.php'); ?>
+<style type="text/css">
+	.form-inline .form-group {margin-bottom: 20px;float: right;font-size: 13px;}
+	.form-inline .input-group {float: right;}
+</style>
+<script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+    
+
+
+
+
+
+<header class="header_section">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<?php include('includes/header_top.php'); ?>
+			</div>	
+		</div>		
+	</div>
+	<?php include('includes/main_nav.php'); ?>
+	<div class="conainer">
+		<div class="row">
+			<div class="col-md-12">
+
+				<div class="sales_point">
+					<h2>Replacement</h2>
+				</div><!--  -->
+				 <div class="container">
+				<div class="navbar navbar-default" role="navigation">
+				  <div class="container-fluid">
+				    <!-- Brand and toggle get grouped for better mobile display -->
+				    <div class="navbar-header">
+				      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				        <span class="sr-only">Toggle navigation</span>
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span>
+				      </button>
+				      
+				    </div>
+
+				    <!-- Collect the nav links, forms, and other content for toggling -->
+				    <div class="collapse navbar-collapse no_padding" id="bs-example-navbar-collapse-1">
+				    	
+				      <ul class="nav navbar-nav">
+				      	
+				        <li class=""><a href="sales_order.php" data-toggle="tooltip" data-placement="bottom" title="Add"><img src="img/icon/add.png"> </a></li>
+				        <li class=""><a href="#" data-toggle="tooltip" data-placement="bottom" title="Delete"><img src="img/icon/Files-Delete-File-icon.png"></a></li>
+				        <li class=""><a href="replacement.php" data-toggle="tooltip" data-placement="bottom" title="Replacement"><img src="img/icon/refresh-icon.png"></a></li>
+				        <li><h3 class="bdt_price">BDT <output class="form-control amountDue disabled top_total" value="0" id="amountDue" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;">.00</h3></li>
+				      </ul>
+				      
+				      <ul class="nav navbar-nav navbar-right">
+
+				        <!-- <li class=""><a href="#" data-toggle="tooltip" data-placement="bottom" title="Barcode"><img src="img/icon/barcode-scanner_318-47243.png"></a></li> -->
+				        <li>
+				            <img src="img/icon/barcode-scanner_318-47243.png" class="barcode fa fa-search barcode-btn">
+				            <div class="barcode-open" style="display:none;" >
+				              <div class="input-group animated fadeInDown" >
+				                <input type="text" class="form-control" placeholder="Search" style="border-radius: 5px;width:195px;padding-right: 39px;">
+				                <span class="input-group-btn">
+				                  <button class="btn-u" type="button"style="border-color: #6899B2;">Go</button>
+				                </span>
+				              </div>
+				            </div>    
+				        </li>
+				        <li class=""><a href="#" data-toggle="tooltip" data-placement="bottom" title="View"><img src="img/icon/86-Folder-512.png"></a></li>
+				        <li>
+				            <img src="img/icon/search.png" class="search fa fa-search search-btn">
+				            <div class="search-open" style="display:none;" >
+				              <div class="input-group animated fadeInDown" >
+				                <input type="text" class="form-control" placeholder="Search" style="border-radius: 5px;width:195px;padding-right: 39px;">
+				                <span class="input-group-btn">
+				                  <button class="btn-u" type="button"style="border-color: #6899B2;">Go</button>
+				                </span>
+				              </div>
+				            </div>    
+				        </li>
+				        
+				        
+				      </ul>
+				    </div><!-- /.navbar-collapse -->
+				  </div><!-- /.container-fluid -->
+				</div>
+				 
+				  
+				</div>
+			</div>
+		</div>
+	</div>
+</header><!--  -->
+<section class="view_container_content">
+
+	<div class="container-fulid">
+		<div class="col-md-12">
+			<div class="row">
+
+				<div class="col-md-12 no_padding">
+
+					<!-- start print option -->
+
+					<div class="panel panel-info no_margin">
+						<div class="panel-heading"><h4 style="text-align:center;">Replacement</h4></div>
+						  	<form action="test.php" method="post">
+						  		<div class="panel-body">
+								<div class="view_top_date"  style="overflow:hidden;">
+									<div class="view_date pull-left" style="width:50%;float:left;">
+										<div class="form-group">
+										    <label for="inputDate3" class="col-sm-3 no_padding control-label " style="width:20%;margin-left:10px;">Date:</label>
+										    <div class="col-sm-9" style="width:73%;float:right">
+										      <input name="date" type="date" class="form-control" id="inputDate3" placeholder="Date" required>
+										      <input type="hidden" name="customer_id" value="<?php if(isset($replacement_data["customer_id"])){echo $replacement_data["customer_id"];}  ?>">
+										    </div>
+										 </div>
+									</div>
+									<div class="view_invoice" style="width:50%;float:right;">
+										
+										<div class="form-group">
+										    <label for="inputInvoice3" class="col-sm-4 no_padding control-label"style="width:40%;margin-left:10px;">Invoice No. :</label>
+										   
+										    <div id="likes" class=""style="width:55%;float:right;">
+										    	 <input type="text" name="invoice_no" class="form-control" value="<?php if(isset($replacement_data["invoice_no"])){echo $replacement_data["invoice_no"];}  ?>">
+											</div>
+											
+										</div>
+
+									</div>
+								</div><!--  -->
+								<div class="view_address" style="overflow:hidden;">
+									<div class="view_a_name"style="width:100%;float:left;">
+										
+										<div class="form-group">
+										    <label for="inputCustomerName3" class="col-sm-3 no_padding control-label "style="    width: 30%;">Customer Name : </label>
+										    <div class="col-sm-9 "style="width: 70%;float: right;padding: 0;padding-right: 15px;">
+										      <input name="" type="text" class="form-control" id="inputCustomerName3" placeholder="Customer Name " value="<?php if(isset($customer_info->customer_name)){echo $customer_info->customer_name;} ?>">
+										    </div>
+										 </div>
+									</div>
+									<div class="view_a_phone"style="width:100%;float:left;">
+										<div class="form-group">
+										    <label for="inputCustomerphone3" class="col-sm-3 no_padding control-label" style="    width: 30%;">Phone : </label>
+										    <div class="col-sm-9 "style="width: 70%;float: right;padding: 0;padding-right: 15px;">
+										      <input name="" type="tel" class="form-control" id="inputCustomerphone3" placeholder="Phone " value="<?php if(isset($customer_info->customer_phone)){echo $customer_info->customer_phone;} ?>" required>
+										      
+										    </div>
+										 </div>
+									</div>
+									<div class="view_a_address"style="width:100%;float:left;">
+										<div class="form-group">
+										    <label for="inputcustomerAddress3" class="col-sm-3 no_padding control-label"style="    width: 23%;">Customer Address: </label>
+										    <div class="col-sm-9 pull-right no_padding">
+										      <textarea name="" class="form-control" rows="3"style="    width: 90%;float: right;margin-right: 15px;"><?php if(isset($customer_info->customer_address)){echo $customer_info->customer_address;} ?></textarea>
+										    </div>
+										 </div>
+									</div>
+									
+								</div><!--  -->
+								<div class="notes"  style="overflow:hidden;">
+									<div class="form-group">
+									    <label for="inputcustomerNotes3" class="col-sm-3 no_padding control-label">Notes : </label>
+									    <div class="col-sm-9 pull-right no_padding">
+									      <textarea name="notes" class="form-control" rows="3"></textarea>
+									    </div>
+									 </div>
+								</div><!--  -->
+								<div class="view_center_folwchart">
+									<div class='row'>
+							      		<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
+<table class="table table-bordered table-hover" id="table_auto">
+<thead>
+<tr>
+	<th colspan="9" style="background:#EF4C4C;color:#fff;font-size:16px;">To Be Replace</th>
+	<th colspan="8" style="background:#5CB85C;color:#fff;font-size:16px;">Replaced By</th>
+</tr>
+<tr style="background:#EEEEEE;color:#000;">
+	
+	<th width="5%">Barcode</th>
+	<th width="8%">Product Description</th>
+	<th width="5%">uom</th>
+	<th width="5%">Cost Per Unit</th>
+	<th width="5%">price</th>
+	<th width="5%">Quantity</th>
+	<th width="5%">Total</th>
+	<th width="5%">Replace Qty</th>
+
+	<th width="1%">&nbsp;</th>
+	<th width="1%">&nbsp;</th>
+
+	<th width="10%">Barcode</th>
+	<th width="10%">Product Description</th>
+	<th width="5%">uom</th>
+	<th width="7%">Cost Per Unit</th>
+	<th width="8%">price</th>
+	<th width="5%">Quantity</th>
+	<th width="10%">Total</th>
+</tr>
+</thead>
+<tbody>
+
+<tr>
+	
+	<td>
+		<input type= "text" disabled="disabled" name="" class="form-control" value="<?php if(isset($replacement_data["barcode"])){echo $replacement_data["barcode"];}  ?>">
+
+		<input type="hidden" name="previous_item[barcode]" class="form-control" value="<?php if(isset($replacement_data["barcode"])){echo $replacement_data["barcode"];}  ?>">
+	</td>
+	
+	<td>
+		<input type= "text" disabled="disabled" name="" class="form-control" value="<?php if(isset($replacement_data["product_description"])){echo $replacement_data["product_description"];}  ?>">
+
+		<input type="hidden" name="previous_item[product_description]" class="form-control" value="<?php if(isset($replacement_data["product_description"])){echo $replacement_data["product_description"];}  ?>">
+		
+	</td>
+	<td>
+		<input type= "text" disabled="disabled" class="form-control" name="" value="<?php if(isset($replacement_data["uom"])){echo $replacement_data["uom"];}  ?>">
+
+		<input type="hidden" name="previous_item[uom]" class="form-control" value="<?php if(isset($replacement_data["uom"])){echo $replacement_data["uom"];}  ?>">
+		
+	</td>
+	<td>
+		<input type= "text" disabled="disabled" class="form-control" name="" value="<?php if(isset($replacement_data["cost_per_unit"])){echo $replacement_data["cost_per_unit"];}  ?>">
+
+		<input type="hidden" name="previous_item[cost_per_unit]" class="form-control" value="<?php if(isset($replacement_data["cost_per_unit"])){echo $replacement_data["cost_per_unit"];}  ?>">
+		
+	</td>
+	<td>
+		<input type= "text" disabled="disabled" class="form-control" name="" value="<?php if(isset($replacement_data["price_per_unit"])){echo $replacement_data["price_per_unit"];}  ?>">
+
+		<input type="hidden" name="previous_item[price_per_unit]" class="form-control" value="<?php if(isset($replacement_data["price_per_unit"])){echo $replacement_data["price_per_unit"];}  ?>">
+		
+	</td>
+	<td>
+		<input type= "text" disabled="disabled" class="form-control" name="" value="<?php if(isset($replacement_data["quantity"])){echo $replacement_data["quantity"];}  ?>">
+
+		
+		
+	</td>
+	<td>
+		<input name="" type="text" disabled="disabled" class="form-control" id="amountPaid1" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;" value="<?php if(isset($replacement_data["amount"])){echo $replacement_data["amount"];}  ?>">
+
+		<input type="hidden" name="previous_item[amount]" class="form-control" value="<?php if(isset($replacement_data["amount"])){echo $replacement_data["amount"];}  ?>">
+		
+	</td>
+	<td><input type="number" id="replacement-quantity" min="0" max='<?php echo intval($replacement_data["quantity"]);?>' name="previous_item[quantity]" class="form-control"></td>
+	<td>&nbsp;</td>
+	<!-- Replaced By -->
+	<td>&nbsp;</td>
+	<td><input type="text" data-type="barcode" name="replaced_item[barcode]" id="itemNo_1" class="form-control autocomplete_txt" autocomplete="off"></td>
+	
+	<td>
+		<input type="text" data-type="product_name" name="replaced_item[product_description]" id="itemName_1" class="form-control autocomplete_txt" autocomplete="off">
+		
+	</td>
+	<td>
+		<input type="text" data-type="uom" name="replaced_item[uom]" id="uom_1" class="form-control autocomplete_txt" autocomplete="off">
+		
+	</td>
+	<td>
+		<input type="number" min="0" name="replaced_item[cost_per_unit]" id="price1_1" class="form-control changesNo" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;">
+		
+	</td>
+	<td>
+		<input type="number" min="0" name="replaced_item[price_per_unit]" id="price_1" class="form-control changesNo" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;">
+		
+	</td>
+	<td>
+		<input type="number" min="0" name="replaced_item[quantity]" id="quantity_1" class="form-control changesNo" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;">
+		
+	</td>
+	<td>
+		<input type="number" min="0" name="replaced_item[amount]" id="total_1" class="form-control totalLinePrice" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;">
+		
+	</td>
+</tr>
+<tr>
+	
+	
+</tr>
+</tbody>
+</table>
+							      		</div>
+							      	</div>
+							      	<!-- <div class='row'>
+							      		<div class='col-xs-12 col-sm-4 col-md-4 col-lg-4'>
+							      			<button class="btn btn-danger delete" type="button">- Delete</button>
+							      			<button class="btn btn-success addmore" type="button">+ Add More</button>
+							      		</div>
+							      	</div> -->
+							      	<div class='row'>	
+							      		<div class='col-xs-12 col-sm-8 col-md-8 col-lg-8'>
+							      			
+											
+							      		</div>
+							      		<div class='col-xs-12 col-sm-4 col-md-4 col-lg-4' style="padding-left:0">
+											<span class="form-inline">
+											<div class="form-group">
+													<label><!-- Total: &nbsp; --></label>
+													<div class="input-group">
+														<!-- <div class="input-group-addon currency">৳</div> -->
+														<input value="" type="hidden" class="form-control" name="" id="subTotal" placeholder="Subtotal" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;">
+													</div>
+												</div>
+											<div class="form-group">
+
+												<input type="hidden" name="cost_adjusted">
+												<input type="hidden" name="amount_to_be_adjusted">
+												<label>Vat: &nbsp;</label>
+												<div class="input-group">
+													
+													<input value="" type="number" min="0" class="form-control" name="" id="tax" placeholder="Vat" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;"><div class="input-group-addon">%</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label>Vat Amount: &nbsp;</label>
+												<div class="input-group">
+													<div class="input-group-addon currency">৳</div>
+													<input value="" type="number" min="0" class="form-control" name="vat" id="taxAmount" placeholder="Vat" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;">
+													
+												</div>
+											</div>
+											<div class="form-group">
+												<label><!-- Sub Total: &nbsp; --></label>
+												<div class="input-group">
+													<!-- <div class="input-group-addon currency">৳</div> -->
+													<input value="" type="hidden" class="form-control" name="" id="totalAftertax" placeholder="Total" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;">
+												</div>
+											</div>
+											<div class="form-group">
+												<label><!-- Delivery Charge: &nbsp; --></label>
+												<div class="input-group">
+													<!-- <div class="input-group-addon currency">৳</div> -->
+													<input value="" type="hidden" class="form-control" name="" id="amountPaid1" placeholder="Delivery Charge" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;">
+													
+												</div>
+											</div>
+											<div class="form-group">
+												<label>Amount Paid: &nbsp;</label>
+												<div class="input-group">
+													<div class="input-group-addon currency">৳</div>
+													<input value="" type="number" min="0" class="form-control" name="" id="amountPaid" placeholder="Amount Paid" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;">
+												</div>
+											</div>
+											<div class="form-group">
+												<label>Amount Due: &nbsp;</label>
+												<div class="input-group">
+													<div class="input-group-addon currency">৳</div>
+													<input value="" type="number"  class="form-control amountDue" name="due"  id="amountDue" placeholder="Amount Due" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;">
+												</div>
+											</div>
+										</span>
+
+										</div>
+							      	</div>
+
+								</div>
+								<button type="submit" class="btn btn-success btn-lg" name="" style="margin: 15px auto;margin-left: 470px;">Confirm</button>
+							</div>
+						</form>	
+							
+					</div><!-- end panel body -->
+						  	
+						
+
+				</div>
+				
+			</div>
+		</div>
+		<!-- <div class="col-md-2"></div> -->
+	</div>
+</section>
+	<script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+	<script src="js/script_replace.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$("#replacement-quantity").keyup(function(){
+			var replace_max_value = $(this).attr('max');
+			var replace_quantity_value = $(this).val();
+			if(replace_quantity_value < 0){
+				$(this).val('0');
+			}
+			else if(replace_quantity_value > replace_max_value){
+				$(this).val(replace_max_value);
+			}
+		});
+		
+	});
+</script>
+<?php include('includes/footer.php'); ?>

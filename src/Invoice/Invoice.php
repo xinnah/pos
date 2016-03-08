@@ -1,163 +1,183 @@
 <?php
   namespace App\Invoice;
-  require_once '../vendor/autoload.php';
 
+  use App\Model\Model;
   use App\Utility\Utility;
   use App\Connection\Connection;
 
-class Invoice{
-		public $sl_no = "";
-		public $customer_id = "";
-		public $invoice_no = "";
-		public $product_description = "";
-		public $uom = "";
-		public $cost_per_unit = "";
-		public $price_per_unit = "";
-		public $quantity = "";
-		public $amount = "";
-		public $vat = "";
-		public $delivery_charge = "";
-		public $total = "";
-		public $paid = "";
-		public $due = "";
-		public $notes = "";
+class Invoice extends Model{
 
-		// Customer info comes from costomer table
-		public $customer_name; 
-		public $customer_phone;
-		public $customer_address;
-		public $customer_balance;
-		public $customer_payment_due;
+  public $table;
 
-	}
+  public function __construct(){
+    parent::__construct();
+  }
 
 
-	public function createInvoice(){
-		$dbConnect = new Connection();
 
-		$query = "INSERT INTO invoice( ";
-		$query .="`sl_no`, ";
-		$query .="`customer_id`, ";
-		$query .="`invoice_no`, ";
-		$query .="`product_description`, ";
-		$query .="`uom`, ";
-		$query .="`cost_per_unit`, ";
-		$query .="`price_per_unit`, ";
-		$query .="`quantity`, ";
-		$query .="`amount`, ";
-		$query .="`vat`, ";
-		$query .="`delivery_charge`, ";
-		$query .="`total`, ";
-		$query .="`paid`, ";
-		$query .="`due`, ";
-		$query .="`notes` ";
-		$query .= ")VALUES( ";
-		$query .="'{$this->sl_no}', ";
-		$query .="'{$this->customer_id}', ";
-		$query .="'{$this->invoice_no}', ";
-		$query .="'{$this->product_description}', ";
-		$query .="'{$this->uom}', ";
-		$query .="'{$this->cost_per_unit}', ";
-		$query .="'{$this->price_per_unit}', ";
-		$query .="'{$this->quantity}', ";
-		$query .="'{$this->amount}', ";
-		$query .="'{$this->vat}', ";
-		$query .="'{$this->delivery_charge}', ";
-		$query .="'{$this->total}', ";
-		$query .="'{$this->paid}', ";
-		$query .="'{$this->due}', ";
-		$query .="'{$this->notes}' ";
-        $query .= ")";
+  public function show_invoice_number(){
+    $this->table = "invoice";
+    $query = "SELECT * FROM {$this->table} ORDER BY id DESC LIMIT 1";
+    $result = mysqli_query($this->connection,$query);
+    $invoice_no_fetch = mysqli_fetch_object($result);
+    $invoice_no = $invoice_no_fetch->invoice_no+1;
+    return $invoice_no;
+  }
 
 
-		$customer_query = "";
+  public function createInvoice($data = array()){
 
-        $createInvoice = mysqli_query($dbConnect->connection,$query);
-        if($createInvoice){
-          return "Invoice has created successfully";
+    $invoice_data = array();
+    $customer_data = array();
+    foreach ($data as $key => $value) {
+        if($key == "customer"){
+          foreach ($_REQUEST[$key] as $customer_key => $customer_value) {
+            $customer_key = str_replace("'", "", $customer_key);
+            $customer_data[$customer_key] = $customer_value;
+          }
+        }elseif($key == "barcode"){
+          foreach ($_REQUEST[$key] as $customer_key => $customer_value) {
+            $invoice_data[$key] = implode(" , ", $_REQUEST[$key]);;
+          }
+        }elseif($key == "product_description"){
+          foreach ($_REQUEST[$key] as $customer_key => $customer_value) {
+            $invoice_data[$key] = implode(" , ", $_REQUEST[$key]);;
+          }
+        }elseif($key == "uom"){
+          foreach ($_REQUEST[$key] as $customer_key => $customer_value) {
+            $invoice_data[$key] = implode(" , ", $_REQUEST[$key]);;
+          }
+        }elseif($key == "cost_per_unit"){
+          foreach ($_REQUEST[$key] as $customer_key => $customer_value) {
+            $invoice_data[$key] = implode(" , ", $_REQUEST[$key]);;
+          }
+        }elseif($key == "price"){
+          foreach ($_REQUEST[$key] as $customer_key => $customer_value) {
+            $invoice_data[$key] = implode(" , ", $_REQUEST[$key]);;
+          }
+        }elseif($key == "quantity"){
+          foreach ($_REQUEST[$key] as $customer_key => $customer_value) {
+            $invoice_data[$key] = implode(" , ", $_REQUEST[$key]);;
+          }
+        }elseif($key == "cost_amount"){
+          foreach ($_REQUEST[$key] as $customer_key => $customer_value) {
+            $invoice_data[$key] = implode(" , ", $_REQUEST[$key]);;
+          }
+        }elseif($key == "amount"){
+          foreach ($_REQUEST[$key] as $customer_key => $customer_value) {
+            $invoice_data[$key] = implode(" , ", $_REQUEST[$key]);;
+          }
         }else{
-          return "Invoice Creation Failed";
+          $invoice_data[$key] = $value;
         }
-	}
+    }
 
+    
+    
+    $this->table ="customer";
+    $customer_phone = isset($customer_data["customer_phone"]) && !empty($customer_data["customer_phone"]) ? $customer_data["customer_phone"] : "";
+    
+    $query = "SELECT * FROM {$this->table} WHERE ";
+    $query .= "customer_phone = '{$customer_phone}' ";
+    $result = mysqli_query($this->connection,$query);
+    $customer_fetch = mysqli_fetch_object($result);
 
-	public function view(){
+    
+    if($customer_fetch){
+      $customer_id = $customer_fetch->customer_id;
+    }elseif($customer = $this->insert($customer_data)){
+      $customer_id = mysqli_insert_id($this->connection);
+    }else{
+      $customer_id = false;
+    }
+  
+    if(count($invoice_data) > 0){
 
-		$dbConnect = new Connection();
-		$invoice = array();
+      if($customer_id){
+        $this->table = "customer";
+        if(array_key_exists("due", $invoice_data)){
+          $due = $invoice_data["due"];
+          $query = "UPDATE {$this->table} SET `customer_payment_due` = `customer_payment_due`+{$due} ";
+          $query .= "WHERE `customer_id` = {$customer_id}";
+          $due_query = mysqli_query($this->connection,$query);
+        }
+        $invoice_data["customer_id"] = $customer_id;
+      }
 
-		$query = "SELECT * FROM `invoice`";
-        $result = mysql_query($query);
+     
+      $invoice_data["invoice_date"] = date("Y-m-d", strtotime($invoice_data["invoice_date"]));
+      
+      $sell_item = trim(strtolower($invoice_data["product_description"]));
+      $sell_item_quantity = (int) trim($invoice_data["quantity"]);
+
+      if(!empty($sell_item) && $sell_item_quantity >=1){
+        $this->table = "inventory";
+        $query = "UPDATE {$this->table} SET ";
+        $query .= "`shop_stock` = `shop_stock`-'{$sell_item_quantity}',";
+        $query .= "`total_stock` = `total_stock`-'{$sell_item_quantity}' ";
+        $query .= "WHERE LOWER(`product_name`)='{$sell_item}'";
+        mysqli_query($this->connection,$query);
+      }
+
+      $this->table = "invoice";
+      if($this->insert($invoice_data)){
+        $last_insert_id = mysqli_insert_id($this->connection);
+        Utility::redirect("view_invoice_pos.php?id=$last_insert_id");
+      }else{
+        Utility::message("Invoice Creation Failed");
+      }
+    }
+  }
+
+  public function show_single_invoice($id = null){
+
+      $this->table = "invoice";
+      $query = "SELECT * FROM {$this->table} WHERE id = {$id}";
+      $result = mysqli_query($this->connection,$query);
+      $invoice_no_fetch = mysqli_fetch_object($result);
+      return $invoice_no_fetch;
+  }
+
+  public function show_customer($id = null){
+      $this->table = "customer";
+      $query = "SELECT * FROM {$this->table} WHERE `customer_id` = '{$id}'";
+      $result = mysqli_query($this->connection,$query);
+      $customer_no_fetch = mysqli_fetch_object($result);
+      return $customer_no_fetch;
+  }
+
+  public function show_all_invoice(){
+
+    $invoice = array();
+
+    $query = "SELECT * FROM `invoice` ORDER BY id DESC";
+        $result = mysqli_query($this->connection,$query);
         
-        while($row = mysql_fetch_object($result)){
+        while($row = mysqli_fetch_object($result)){
             $invoice[] = $row;
         }
         return $invoice;
 
-	}
+  }
 
-	public function update(){
-
-		$dbConnect = new Connection();
-
-		$query = "UPDATE `invoice` SET ";
-		$query .="`sl_no`= ";
-		$query .="'{$this->sl_no}', ";
-		$query .="`customer_id`= ";
-		$query .="'{$this->customer_id}', ";
-		$query .="`invoice_no`= ";
-		$query .="'{$this->invoice_no}', ";
-		$query .="`product_description`= ";
-		$query .="'{$this->product_description}', ";
-		$query .="`uom`= ";
-		$query .="'{$this->uom}', ";
-		$query .="`cost_per_unit`= ";
-		$query .="'{$this->cost_per_unit}', ";
-		$query .="`price_per_unit`= ";
-		$query .="'{$this->price_per_unit}', ";
-		$query .="`quantity`= ";
-		$query .="'{$this->quantity}', ";
-		$query .="`amount`= ";
-		$query .="'{$this->amount}', ";
-		$query .="`vat`= ";
-		$query .="'{$this->vat}', ";
-		$query .="`delivery_charge`= ";
-		$query .="'{$this->delivery_charge}', ";
-		$query .="`total`= ";
-		$query .="'{$this->total}', ";
-		$query .="`paid`= ";
-		$query .="'{$this->paid}', ";
-		$query .="`due`= ";
-		$query .="'{$this->due}', ";
-		$query .="`notes`= ";
-		$query .="'{$this->notes}' ";
-
-        $updateInvoice = mysqli_query($dbConnect->connection,$query);
-        if($updateInvoice){
-          return "Invoice has updated successfully";
+  public function updates(){
+        if($updateinvoice){
+          return "invoice has updated successfully";
         }else{
-          return "Invoice Updatation Failed";
+          return "invoice Updatation Failed";
         }
 
-	}
+  }
 
 
 
-	public function delete($id){
-
-		$dbConnect = new Connection();
-		if(is_null($id)){
-            return "Select a invoice to Delete";
-        }else{
-        	$query = "DELETE FROM `invoice` WHERE `id` = ".$id;
-        	$result = mysql_query($query);
-        	if($result && mysqli_affected_rows($dbConnect->connection) == 1){
-        		return "Invoice has deleted successfully";
-        	}else{
-        		return "Invoice deletation Failed";
-        	}
-        }
-	}
+  public function deletes($id){
+          if($result && mysqli_affected_rows($dbConnect->connection) == 1){
+            return "Invoice has deleted successfully";
+          }else{
+            return "Invoice deletation Failed";
+          }
+  }
 
 
 

@@ -1,0 +1,15 @@
+barcode,product_name,category,product_code,brand,model,specification,uom,purchase_cost_per_unit,sales_price_per_unit,warehouse_stock,shop_stock,total_stock,stock_value_on_purchase,stock_value,stock_value_on_sale,purchase_order_ref,added_by
+,pen,Laptop Accessories,,Apple,,,Pcs,10,0,5,15,20,,,,,Md Ali Zinnah
+543254,Shirt,Others,2441564,HP,XFDDF,dsafhsdafsd,Box = (100 pcs),500,600,10,10,20,,,,56412,Md Ali Zinnah
+WESAS1422,laptop,Laptop Accessories,2441565,Apple,SMISDA2154,sfdsf,Box = (100 pcs),100,120,5,15,20,,,,541212,admin
+48518651,iPhone ,Others,2441566,Apple,I_PHONE42,KLJKdf,Box = (100 pcs),100000,120000,10,10,20,300000,,360000,455123,admin
+, Samsung Phone,Others,2441567,Samsung,SLM-3,dfdsfdsf,Box = (12pcs),5000,6000,10,10,20,80000,,96000,54712,xinnah
+48518651,iPhone ,Others,2441568,Apple,I_PHONE42,KLJKdf,Box = (100 pcs),100000,120000,10,10,20,300000,,360000,455123,ashik
+48518651,Asus ,Truck,2441569,Apple,dsfa,KLJKdf,Box = (100 pcs),100000,120000,0,1,1,40000,,30000,455123,Farfafor
+48518651,Asus ,Truck,2441570,Apple,dsfa,KLJKdf,Box = (100 pcs),100000,120000,0,1,1,40000,,30000,455123,Zinnah
+48518651,Asus ,Truck,2441571,Apple,dsfa,KLJKdf,Box = (100 pcs),100000,120000,0,1,1,40000,,30000,455123,Ashik
+48518651,Asus ,Truck,2441572,Apple,dsfa,KLJKdf,Box = (100 pcs),100000,120000,0,1,1,40000,,30000,455123,Shakil
+48518651,Asus ,Truck,2441573,Apple,dsfa,KLJKdf,Box = (100 pcs),100000,120000,0,1,1,40000,,30000,455123,Saddam
+48518651,Asus ,Truck,2441574,Apple,dsfa,KLJKdf,Box = (100 pcs),100000,120000,0,1,1,40000,,30000,455123,Mushdiq
+48518651,Asus ,Truck,2441575,Apple,dsfa,KLJKdf,Box = (100 pcs),100,120,0,1,1,100,,120,455123,Ashik
+48518651,Pepsi,Others,2441576,Apple,Black,KLJKdf,Box = (100 pcs),80,1000,10,10,20,300000,,360000,455123,Tanveer

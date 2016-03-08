@@ -28,10 +28,10 @@
 	        <li class="<?php echo ($page_name=='purchase.php')?'active':'';?>"><a href="purchase.php">PURCHASE</a></li>
 	        
 	        <li class="<?php echo ($page_name=='inventory.php')?'active':'';?>"><a href="inventory.php">INVENTORY</a></li>
-	        <li><a href="#">ACCOUNTS</a></li>
+	        <li class="<?php echo ($page_name=='accounts.php')?'active':'';?>"><a href="accounts.php">ACCOUNTS</a></li>
 	        <li class="<?php echo ($page_name=='overhead_costs.php')?'active':'';?>"><a href="overhead_costs.php">OVERHEAD COSTS</a></li>
-	        <li><a href="#">REPORTS</a></li>
-	        <li><a href="#">BARCODE GENERATOR</a></li>
+	        <li class="<?php echo ($page_name=='reports.php')?'active':'';?>"><a href="reports.php">REPORTS</a></li>
+	        <li class="<?php echo ($page_name=='barcode.php')?'active':'';?>"><a href="barcode.php">BARCODE GENERATOR</a></li>
 	        
 	      </ul>
 	      

@@ -1,0 +1,12 @@
+@media only print {
+   #print {font-size: 10px;}
+   #print tr{background: #2BAEA8 !important;}
+   .header_section{display: none;}
+   .main_footer_section{display: none;}
+   .bottom_section{display: none;}
+   .logo_left{width:30% !important;background: #ccc !important;padding:0px 10px !important;margin-right: 5px;}
+   .pull_center{background: #ccc !important;width: 100% !important;margin: 0 !important;}
+}
+@media screen {
+   body {}
+}

@@ -1,17 +1,20 @@
-<?php //ini_set("display_errors", "off") ?>
+
+<?php session_start(); ?>
 
 <?php require_once '../vendor/autoload.php' ?>
 <?php
 	use App\Connection\Connection; 
 	use App\Utility\Utility; 
 	use App\LoginRegistration\LoginRegistration;  
-
-
 	$dbConnect = new Connection;
 	// Utility::dd($dbConnect);
 	$message = isset($dbConnect->message) ? $dbConnect->message : "";
 ?>
-
+<?php 
+	if(isset($_SESSION["username"])){
+		$_SESSION["username"] = NULL;
+	}
+ ?>
 <?php
 	if(isset($dbConnect) && $_SERVER["REQUEST_METHOD"] == "POST" && isset($_REQUEST["login"])){
 		if(!empty($_REQUEST["username"]) && !empty($_REQUEST["password"])){
@@ -19,19 +22,23 @@
 			$dbUser = $newUser->loginQuery();
 			if($dbUser){
 				if($dbUser["username"] == $newUser->username && password_verify($newUser->password,$dbUser["password"])){
-					Utility::redirect("welcome.php");
+					$_SESSION["username"] = $dbUser["username"];
+					$_SESSION["privilege"] = $dbUser["privilege"];
+					
+						Utility::redirect("welcome.php");
+					
+					
 				}else{
-					$message = "Error...Username/Password doesn't match!";
+					$message = "Username/Password is incorrect!";
 				}
 			}else{
-				$message = "Error...There is no user like this!";
+				$message = "There is no user like this!";
 			}
 		}else{
 			$message = "Username/Password can't be empty";
 		}
 	} 
 	
-
 ?>
 <!DOCTYPE html>
 <html lang="en-US">
@@ -107,7 +114,7 @@
 							<p>Binary Pos <span>v 1.0.0</span> </p>
 						</div>
 						<div class="col-sm-3">
-							<p>Copyright &copy; 2015 <a href="www.binary-logic.net">Binary Logic</a></p>
+							<p>Copyright &copy; 2015 <a href="http://www.binary-logic.net" target="_blank">Binary Logic</a></p>
 						</div>
 					</div>
 				</div>

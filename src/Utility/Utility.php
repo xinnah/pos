@@ -19,6 +19,12 @@
 			var_dump($str);
 		}
 
+		static public function p($str){
+			echo "<pre>";
+				print_r($str);
+			echo "</pre>";
+		}
+
 		static public function dd($str){
 			var_dump($str);
 			die();
@@ -36,6 +42,29 @@
 					}
 				}
 			}
+	    }
+
+
+	    static public function message($message = null){
+	        if(is_null($message)){
+	            return self::getMessage();
+	        }else{
+	            return self::setMessage($message);
+	        }
+
+	    }
+
+	    static private function getMessage(){
+	    	if(isset($_SESSION["message"])){
+	        	$message = $_SESSION["message"];
+	        	$_SESSION["message"] = "";
+	        	return $message;
+	        }
+	        return false;
+	    }
+
+	    static private function setMessage($message){
+	         $_SESSION["message"] = $message;
 	    }
 
 	}

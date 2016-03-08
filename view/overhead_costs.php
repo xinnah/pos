@@ -1,3 +1,9 @@
+<?php 
+	require_once 'start.php';
+	use App\Utility\Utility; 
+	use App\Summary\Summary;
+
+?>
 	<!-- link include -->
 	<?php include('includes/all_link_body.php'); ?>
 
@@ -24,19 +30,22 @@
 				<div class="sales_manager_content">
 					<div class="sales_point">
 					<h2>overhead costs</h2>
+					
 				</div><!--  -->
 					<div class="col-md-7">
 						<div class="sales_manager_left">
 							<ul>
-								<li> <button class="btn btn-info" style="width:60%;margin: 1px 0;"><a href="#">add cost</a> </button></li>
-								<li><button class="btn btn-info" style="width:60%;margin: 1px 0;"><a href="#">add new attribute</a> </button></li>
-								<li><button class="btn btn-info" style="width:60%;margin: 1px 0;"><a href="#">pay houserent</a> </button></li>
+
+								<li> <button class="btn btn-info" style="width:60%;margin: 1px 0;"><a href="add_cost.php">add cost</a> </button></li>
+								<!-- <li><button class="btn btn-info" style="width:60%;margin: 1px 0;"><a href="add_new_attribute.php">add new attribute</a> </button></li> -->
+								<li><button class="btn btn-info" style="width:60%;margin: 1px 0;"><a href="pay_houserent.php">pay houserent</a> </button></li>
 								<br>
-								<li><button class="btn btn-info" style="width:60%;margin: 1px 0;"><a href="#">pay salary</a> </button></li>
-								<li><button class="btn btn-info" style="width:60%;margin: 1px 0;"><a href="#">food bill</a> </button></li>
-								<li><button class="btn btn-info" style="width:60%;margin: 1px 0;"><a href="#">entertainment bill</a> </button></li>
-								<li><button class="btn btn-info" style="width:60%;margin: 1px 0;"><a href="#">internet bill</a> </button></li>
-								<li><button class="btn btn-info" style="width:60%;margin: 1px 0;"><a href="#">elecricity bill</a> </button></li>
+								<li><button class="btn btn-info" style="width:60%;margin: 1px 0;"><a href="pay_salary.php">pay salary</a> </button></li>
+								<li><button class="btn btn-info" style="width:60%;margin: 1px 0;"><a href="food_bill.php">food bill</a> </button></li>
+								<br>
+								<li><button class="btn btn-info" style="width:60%;margin: 1px 0;"><a href="entertainment_bill.php">entertainment bill</a> </button></li>
+								<li><button class="btn btn-info" style="width:60%;margin: 1px 0;"><a href="internet_bill.php">internet bill</a> </button></li>
+								<li><button class="btn btn-info" style="width:60%;margin: 1px 0;"><a href="electricity_bill.php">electricity bill</a> </button></li>
 								
 							</ul>
 						</div>
@@ -57,9 +66,12 @@
 								        </a>
 								      </h4>
 								    </div>
-								    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+								    <div id="collapseOne" class="panel-collapse collapsed" role="tabpanel" aria-labelledby="headingOne">
 								      <div class="panel-body">
-								        <h4>bdt 00000.00</h4>
+								      <?php 
+								      		$summary = new Summary;
+								      	 ?>
+								        <h4>bdt <?php echo array_sum($summary->overhead_summary(true)); ?></h4>
 								      </div>
 								    </div>
 								  </div><!-- end panel -->
@@ -82,11 +94,16 @@
 								    </div>
 								    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
 								      <div class="panel-body">
-								        <h4>1.</h4>
-								        <h4>2.</h4>
-								        <h4>3.</h4>
-								        <h4>4.</h4>
-								        <h4>5.</h4>
+								        <?php 
+								      		$salary_summary = $summary->salary_summary();
+								      		
+								      		$sl = 1;
+								      		foreach ($salary_summary as $salary) {
+								      	 ?>
+									        <h4><?php echo $sl++; ?> . <?php echo $salary->notes." ".$salary->total_cost; ?></h4>
+										<?php 
+											}
+										 ?>
 								      </div>
 								    </div>
 								  </div><!-- end panel -->
@@ -107,11 +124,11 @@
 								    </div>
 								    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
 								      <div class="panel-body">
-								        <h4>1.</h4>
-								        <h4>2.</h4>
+								        <h4>BDT <?php echo array_sum($summary->overhead_summary()); ?></h4>
+								        <!-- <h4>2.</h4>
 								        <h4>3.</h4>
 								        <h4>4.</h4>
-								        <h4>5.</h4>
+								        <h4>5.</h4> -->
 								      </div>
 								    </div>
 								  </div><!-- end panel -->

@@ -15,10 +15,14 @@
 		<link rel="stylesheet" type="text/css" href="css/font.css">
 		<link rel="stylesheet" type="text/css" href="css/ardestine.css">
 		<!-- Custom CSS -->
-		
+		<link rel="stylesheet" type="text/css" href="css/animate.css">
+		<link href="css/jquery-ui.min.css" rel="stylesheet">
+    	<link href="css/datepicker.css" rel="stylesheet">
+		<link rel="stylesheet" href="css/dataTables.bootstrap.min.css" />
+
 		<!-- <link rel="icon" type="image/png" href="images/icon-sm.png"> -->
 		<link rel="stylesheet" href="css/style.css" >
-		<link rel="stylesheet" href="css/responsive.css" >
+		<script type="text/javascript" src="ckeditor/ckeditor.js"></script>
 		<meta name="description" content="Create a sticky navigation bar that remains fixed to the top after scroll" />
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -27,6 +31,6 @@
 			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 			<![endif]-->
 	
-
+		
 	</head>
 <body>

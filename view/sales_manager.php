@@ -1,3 +1,8 @@
+<?php require_once 'start.php'; ?>
+<?php 
+	use App\Utility\Utility;
+	use App\Summary\Summary;
+?>
 	<!-- link include -->
 	<?php include('includes/all_link_body.php'); ?>
 
@@ -31,20 +36,19 @@
 								<li> <button class="btn btn-info" style="width:60%;margin: 1px 0;"><a href="welcome.php">go to pos</a> </button></li>
 								<li><button class="btn btn-info" style="width:60%;margin: 1px 0;"><a href="add_quotation.php">add new quotation</a> </button></li>
 								<li><button class="btn btn-info" style="width:60%;margin: 1px 0;"><a href="search_quotation.php">search quotation</a> </button></li>
+								<li><button class="btn btn-info" style="width:60%;margin: 1px 0;"><a href="search_invoice.php">search invoice</a> </button></li>
 								<br>
 								<li><button class="btn btn-info" style="width:60%;margin: 1px 0;"><a href="sales_order.php">add sales order</a> </button></li>
 								<li><button class="btn btn-info" style="width:60%;margin: 1px 0;"><a href="generate_invoice.php">generate invoice</a> </button></li>
 								<li><button class="btn btn-info" style="width:60%;margin: 1px 0;"><a href="delivery_against_order.php">delivery against orders</a> </button></li>
-								<li><button class="btn btn-info" style="width:60%;margin: 1px 0;"><a href="#">outstanding orders</a> </button></li>
-								<li><button class="btn btn-info" style="width:60%;margin: 1px 0;"><a href="#">search sales orders</a> </button></li>
+								<li><button class="btn btn-info" style="width:60%;margin: 1px 0;"><a href="outstanding_orders.php">outstanding orders</a> </button></li>
+								<li><button class="btn btn-info" style="width:60%;margin: 1px 0;"><a href="search_sales_order.php">search sales orders</a> </button></li>
 								<br>
-								<li><button class="btn btn-info" style="width:60%;margin: 1px 0;"><a href="#">add/manage customers</a> </button></li>
-								<li><button class="btn btn-info" style="width:60%;margin: 1px 0;"><a href="#">customer payments</a> </button></li>
+								<li><button class="btn btn-info" style="width:60%;margin: 1px 0;"><a href="add_customer.php">add/manage customers</a> </button></li>
+								<li><button class="btn btn-info" style="width:60%;margin: 1px 0;"><a href="customer_payments.php">customer payments</a> </button></li>
 								<br>
-								<li><button class="btn btn-info" style="width:60%;margin: 1px 0;"><a href="#">check sales status[by sales person]</a> </button></li>
-								<li><button class="btn btn-info" style="width:60%;margin: 1px 0;"><a href="#">check sales report</a> </button></li>
+								<li><button class="btn btn-info" style="width:60%;margin: 1px 0;"><a href="replacement_history.php">Replacement History</a> </button></li>
 								<br>
-								<li><button class="btn btn-info" style="width:60%;margin: 1px 0;"><a href="#">add/manage sales person</a> </button></li>
 							</ul>
 						</div>
 					</div><!--  -->
@@ -63,9 +67,12 @@
 								        </a>
 								      </h4>
 								    </div>
-								    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+								    <div id="collapseOne" class="panel-collapse collapsed" role="tabpanel" aria-labelledby="headingOne">
 								      <div class="panel-body">
-								        <h4>bdt 00000.00</h4>
+								      	<?php 
+								      		$summary = new Summary;
+								      	 ?>
+								        <h4>bdt <?php echo array_sum($summary->sales_summary("today")); ?></h4>
 								      </div>
 								    </div>
 								  </div><!-- end panel -->
@@ -87,7 +94,7 @@
 								    </div>
 								    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
 								      <div class="panel-body">
-								        <h4>bdt 00000.00</h4>
+								        <h4>bdt <?php echo array_sum($summary->sales_summary("month")); ?></h4>
 								      </div>
 								    </div>
 								  </div><!-- end panel -->
@@ -107,7 +114,7 @@
 								    </div>
 								    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
 								      <div class="panel-body">
-								        <h4>bdt 00000.00</h4>
+								        <h4>bdt <?php echo array_sum($summary->sales_summary("year")); ?></h4>
 								      </div>
 								    </div>
 								  </div><!-- end panel -->
@@ -122,7 +129,7 @@
 									<h3>4.</h3>
 									<h3>5.</h3> -->
 
-									<div class="panel panel-info no_margin">
+									<!-- <div class="panel panel-info no_margin">
 								    <div class="panel-heading" role="tab" id="headingFour">
 								      <h4 class="panel-title">
 								        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
@@ -140,19 +147,19 @@
 								        <h4>5.</h4>
 								      </div>
 								    </div>
-								  </div><!-- end panel -->
+								  </div> --><!-- end panel -->
 								</div>
 							</div>
 							<div class="col-md-6">
-								<div class="best_seller_year">
-									<!-- <h2>best sellers(this year)</h2>
+								<!-- <div class="best_seller_year">
+									<h2>best sellers(this year)</h2>
 									<h3>1.</h3>
 									<h3>2.</h3>
 									<h3>3.</h3>
 									<h3>4.</h3>
 									<h3>5.</h3> -->
 
-									<div class="panel panel-info no_margin">
+									<!-- <div class="panel panel-info no_margin">
 								    <div class="panel-heading" role="tab" id="headingFive">
 								      <h4 class="panel-title">
 								        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
@@ -170,8 +177,8 @@
 								        <h4>5.</h4>
 								      </div>
 								    </div>
-								  </div><!-- end panel -->
-								</div>
+								  </div>
+								</div> -->
 							</div>
 						</div>
 					</div><!-- end -->

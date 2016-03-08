@@ -17,9 +17,21 @@
 			</div>
 		</div>
 	</footer>
+<script src="js/wow.min.js"></script>
+<script type="text/javascript" src="js/scriptanother.js"></script>
 
 <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+    <script src="js/jquery-ui.min.js"></script>
+    
+    <script src="js/bootstrap-datepicker.js"></script>
+    
+	<script src="js/jquery.dataTables.min.js"></script>
+	<script src="js/dataTables.bootstrap.min.js"></script>
+
+
+
 <script type="text/javascript">
 	$(function () {
   $('[data-toggle="tooltip"]').tooltip()
@@ -38,7 +50,12 @@
 				 $('nav').removeClass('fixed');
 			 }
 		});
-	});
+	});/*end scroll*/
+   $('#myModal').on('shown.bs.modal', function () {
+	  $('#myInput').focus()
+	});/*end modal*/
+
 </script>
+
 </body>
 </html>

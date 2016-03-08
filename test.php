@@ -2,7 +2,8 @@
  <html>
 <head>
  <script>
-    confirm('Hi Webcoachbd');
+    var prefix = 5;
+    var postfix = 4;
  </script>
 </head>
 <body>

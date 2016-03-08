@@ -1,88 +1,123 @@
 <?php
   namespace App\Quotation;
-  require_once '../vendor/autoload.php';
 
+  use App\Model\Model;
   use App\Utility\Utility;
   use App\Connection\Connection;
 
-class Quotation{
-		public $sl_no;
-		public $customer_id;
-		public $quotation_no;
-		public $product_description;
-		public $uom;
-		public $cost_per_unit;
-		public $price_per_unit;
-		public $quantity;
-		public $amount;
-		public $vat;
-		public $delivery_charge;
-		public $total;
-		public $paid;
-		public $sales_order_no;
-		public $invoice_no;
-		public $delivery_receipt_no;
+class Quotation extends Model{
 
-		// Customer info comes from costomer table
-		public $customer_name; 
-		public $customer_phone;
-		public $customer_address;
-		public $customer_balance;
-		public $customer_payment_due;
+	public $table;
 
+	public function __construct(){
+		parent::__construct();
 	}
 
 
-	public function createQuotation(){
-		$dbConnect = new Connection();
 
-		$query = "INSERT INTO quotation( ";
-		$query .="`sl_no`, ";
-		$query .="`customer_id`, ";
-		$query .="`quotation_no`, ";
-		$query .="`product_description`, ";
-		$query .="`uom`, ";
-		$query .="`cost_per_unit`, ";
-		$query .="`price_per_unit`, ";
-		$query .="`quantity`, ";
-		$query .="`amount`, ";
-		$query .="`vat`, ";
-		$query .="`delivery_charge`, ";
-		$query .="`total`, ";
-		$query .="`paid`, ";
-		$query .="`sales_order_no`, ";
-		$query .="`invoice_no`, ";
-		$query .="`delivery_receipt_no` ";
-		$query .= ")VALUES( ";
-		$query .="'{$this->sl_no}', ";
-		$query .="'{$this->customer_id}', ";
-		$query .="'{$this->quotation_no}', ";
-		$query .="'{$this->product_description}', ";
-		$query .="'{$this->uom}', ";
-		$query .="'{$this->cost_per_unit}', ";
-		$query .="'{$this->price_per_unit}', ";
-		$query .="'{$this->quantity}', ";
-		$query .="'{$this->amount}', ";
-		$query .="'{$this->vat}', ";
-		$query .="'{$this->delivery_charge}', ";
-		$query .="'{$this->total}', ";
-		$query .="'{$this->paid}', ";
-		$query .="'{$this->sales_order_no}', ";
-		$query .="'{$this->invoice_no}', ";
-		$query .="'{$this->delivery_receipt_no}' ";
-        $query .= ")";
-
-
-		$customer_query = "";
-
-        $createQuotation = mysqli_query($dbConnect->connection,$query);
-        if($createQuotation){
-          return "Invoice has created successfully";
-        }else{
-          return "Invoice Creation Failed";
-        }
+	public function show_quotation_number(){
+		$this->table = "quotation";
+		$query = "SELECT * FROM {$this->table} ORDER BY id DESC LIMIT 1";
+		$result = mysqli_query($this->connection,$query);
+		$quotation_no_fetch = mysqli_fetch_object($result);
+		$quotation_no = $quotation_no_fetch->quotation_no+1;
+		return $quotation_no;
 	}
 
+
+	public function createQuotation($data = array()){
+
+		$quotation_data = array();
+		$customer_data = array();
+		foreach ($data as $key => $value) {
+		  	if($key == "customer"){
+		  		foreach ($_REQUEST[$key] as $customer_key => $customer_value) {
+		  			$customer_key = str_replace("'", "", $customer_key);
+		  			$customer_data[$customer_key] = $customer_value;
+		  		}
+		  	}elseif($key == "barcode"){
+		  		foreach ($_REQUEST[$key] as $customer_key => $customer_value) {
+		  			$quotation_data[$key] = implode(" , ", $_REQUEST[$key]);;
+		  		}
+		  	}elseif($key == "product_description"){
+		  		foreach ($_REQUEST[$key] as $customer_key => $customer_value) {
+		  			$quotation_data[$key] = implode(" , ", $_REQUEST[$key]);;
+		  		}
+		  	}elseif($key == "uom"){
+		  		foreach ($_REQUEST[$key] as $customer_key => $customer_value) {
+		  			$quotation_data[$key] = implode(" , ", $_REQUEST[$key]);;
+		  		}
+		  	}elseif($key == "cost_per_unit"){
+		  		foreach ($_REQUEST[$key] as $customer_key => $customer_value) {
+		  			$quotation_data[$key] = implode(" , ", $_REQUEST[$key]);;
+		  		}
+		  	}elseif($key == "price"){
+		  		foreach ($_REQUEST[$key] as $customer_key => $customer_value) {
+		  			$quotation_data[$key] = implode(" , ", $_REQUEST[$key]);;
+		  		}
+		  	}elseif($key == "quantity"){
+		  		foreach ($_REQUEST[$key] as $customer_key => $customer_value) {
+		  			$quotation_data[$key] = implode(" , ", $_REQUEST[$key]);;
+		  		}
+		  	}elseif($key == "amount"){
+		  		foreach ($_REQUEST[$key] as $customer_key => $customer_value) {
+		  			$quotation_data[$key] = implode(" , ", $_REQUEST[$key]);;
+		  		}
+		  	}else{
+		  		$quotation_data[$key] = $value;
+		  	}
+		}
+
+		
+		
+		$this->table ="customer";
+		$customer_phone = isset($customer_data["customer_phone"]) && !empty($customer_data["customer_phone"]) ? $customer_data["customer_phone"] : "";
+		
+		$query = "SELECT * FROM {$this->table} WHERE ";
+		$query .= "customer_phone = '{$customer_phone}' ";
+		$result = mysqli_query($this->connection,$query);
+		$customer_fetch = mysqli_fetch_object($result);
+
+		
+		if($customer_fetch){
+			$customer_id = $customer_fetch->customer_id;
+		}elseif($customer = $this->insert($customer_data)){
+			$customer_id = mysqli_insert_id($this->connection);
+		}else{
+			$customer_id = false;
+		}
+	
+		if(count($quotation_data) > 0){
+			$this->table = "quotation";
+			if($customer_id){
+				$quotation_data["customer_id"] = $customer_id;
+			}
+			$quotation_data["quotation_date"] = date("Y-m-d", strtotime($quotation_data["quotation_date"]));
+	        if($this->insert($quotation_data)){
+	        	$last_insert_id = mysqli_insert_id($this->connection);
+	        	Utility::redirect("view_quotation.php?id=$last_insert_id");
+	        }else{
+	        	Utility::message("Quotation Creation Failed");
+	        }
+    	}
+	}
+
+	public function show_single_quotation($id = null){
+
+			$this->table = "quotation";
+			$query = "SELECT * FROM {$this->table} WHERE id = {$id}";
+			$result = mysqli_query($this->connection,$query);
+			$quotation_no_fetch = mysqli_fetch_object($result);
+			return $quotation_no_fetch;
+	}
+
+	public function show_customer($id = null){
+			$this->table = "customer";
+			$query = "SELECT * FROM {$this->table} WHERE `customer_id` = '{$id}'";
+			$result = mysqli_query($this->connection,$query);
+			$customer_no_fetch = mysqli_fetch_object($result);
+			return $customer_no_fetch;
+	}
 
 	public function view(){
 
@@ -99,45 +134,7 @@ class Quotation{
 
 	}
 
-	public function update(){
-
-		$dbConnect = new Connection();
-
-		$query = "UPDATE `quotation` SET ";
-		$query .="`sl_no`= ";
-		$query .="'{$this->sl_no}', ";
-		$query .="`customer_id`= ";
-		$query .="'{$this->customer_id}', ";
-		$query .="`quotation_no`= ";
-		$query .="'{$this->quotation_no}', ";
-		$query .="`product_description`= ";
-		$query .="'{$this->product_description}', ";
-		$query .="`uom`= ";
-		$query .="'{$this->uom}', ";
-		$query .="`cost_per_unit`= ";
-		$query .="'{$this->cost_per_unit}', ";
-		$query .="`price_per_unit`= ";
-		$query .="'{$this->price_per_unit}', ";
-		$query .="`quantity`= ";
-		$query .="'{$this->quantity}', ";
-		$query .="`amount`= ";
-		$query .="'{$this->amount}', ";
-		$query .="`vat`= ";
-		$query .="'{$this->vat}', ";
-		$query .="`delivery_charge`= ";
-		$query .="'{$this->delivery_charge}', ";
-		$query .="`total`= ";
-		$query .="'{$this->total}', ";
-		$query .="`paid`= ";
-		$query .="'{$this->paid}', ";
-		$query .="`sales_order_no`= ";
-		$query .="'{$this->sales_order_no}', ";
-		$query .="`invoice_no`= ";
-		$query .="'{$this->invoice_no}', ";
-		$query .="`delivery_receipt_no`= ";
-		$query .="'{$this->delivery_receipt_no}' ";
-
-        $updateQuotation = mysqli_query($dbConnect->connection,$query);
+	public function updates(){
         if($updateQuotation){
           return "Quotation has updated successfully";
         }else{
@@ -148,20 +145,12 @@ class Quotation{
 
 
 
-	public function delete($id){
-
-		$dbConnect = new Connection();
-		if(is_null($id)){
-            return "Select a quotation to Delete";
-        }else{
-        	$query = "DELETE FROM `quotation` WHERE `id` = ".$id;
-        	$result = mysql_query($query);
+	public function deletes($id){
         	if($result && mysqli_affected_rows($dbConnect->connection) == 1){
         		return "Quotation has deleted successfully";
         	}else{
         		return "Quotation deletation Failed";
         	}
-        }
 	}
 
 

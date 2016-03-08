@@ -10,11 +10,16 @@ class LoginRegistration{
     public $errors = array();
     public $username = "";
     public $password = "";
+    public $privilege = "";
 
     public function __construct(array $data = array()){
       if(array_key_exists('username',$data) && array_key_exists('password',$data)){
         $this->username = $data['username'];
-        $this->password = $data['password'];;
+        $this->password = $data['password'];
+      }
+
+      if(array_key_exists('privilege',$data)){
+        $this->privilege = $data['privilege'];
       }
     }
 
@@ -40,9 +45,9 @@ class LoginRegistration{
       if($result && mysqli_affected_rows($dbConnect->connection) == 1){
         return "This user is alredy Exist!";
       }elseif(mysqli_affected_rows($dbConnect->connection) == 0){
-        $query = "INSERT INTO admin(username,password ";
+        $query = "INSERT INTO admin(username,password,privilege ";
         $query .= ")VALUES( ";
-        $query .= "'{$this->username}','{$this->password}'";
+        $query .= "'{$this->username}','{$this->password}','{$this->privilege}'";
         $query .= ")";
         $addUser = mysqli_query($dbConnect->connection,$query);
         if($addUser){
