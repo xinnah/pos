@@ -97,7 +97,7 @@ if(isset($_POST['supplier_phone']) && $_POST['supplier_phone']!=""){
 						</div>
 					</div>	
 						<div class="bottom_section">
-							<a href="update_purchase_order.php"><input class="btn btn-info pull-left" type="submit" value="update" name="update"></a>
+							<a href="add_purchase_orders.php"><input class="btn btn-info pull-left" type="submit" value="New Purchase Order"></a>
 							<button class="btn btn-success pull-right"name="confirm_invoice" onclick="printDiv('print<?php echo $row['id']; ?>')"style="margin-right: 30px;">Print
 								<script>
 					                function printDiv(divName) {

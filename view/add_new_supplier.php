@@ -63,10 +63,10 @@
 </header><!--  -->
 <section class="view_container_content">
 
-	<div class="container" style="background:#fff;width:55%;float:left;margin-left:110px;">
+	<div class="container">
 		<div class="row">
-
-			<div class="col-md-12 no_padding">
+			<div class="col-md-2"></div>
+			<div class="col-md-8 no_padding">
 
 				<!-- start print option -->
 
@@ -104,18 +104,15 @@
 									  <input name="supplier_balance" type="hidden" />
 									  <input name="due_to_supplier" type="hidden" />
 									</div>
-								  	<button type="submit" class="btn btn-success btn-lg" style="margin: 15px auto;margin-left: 323px;">Add Supplier</button></a>
-
+								  	<div class="confim_button">
+								  		<button type="submit" class="btn btn-success btn-lg">Add Supplier</button>
+								  	</div>
 								</form>
 							
-							
-							
 						</div>
-					</div><!-- end panel body -->
-					  	
-					
-
+					</div><!-- end panel body -->	
 			</div>
+			<div class="col-md-2"></div>
 			
 		</div>
 	</div>

@@ -14,7 +14,7 @@
 	.form-group{overflow: hidden;margin: 0;text-align: left;}
 	.view_qutation{width: 100%;overflow: hidden;}
 	.btn-warning {width: 12%;margin-right: 15px;}
-	.form-control{width:20%;}
+	
 </style>
 
 
@@ -34,8 +34,8 @@ if(isset($_POST['supplier_name']) && $_POST['supplier_name']!=""){
 
 	<div class="container"style="margin-bottom:20px;">
 		<div class="row">
-
-			<div class="col-md-12 no_padding">
+			<div class="col-md-2"></div>
+			<div class="col-md-8 no_padding">
 
 				<!-- start print option -->
 
@@ -120,7 +120,7 @@ if(isset($_POST['supplier_name']) && $_POST['supplier_name']!=""){
 									  <input type="hidden" name="id" value="<?php echo $row["id"]; ?>">
 									  <div class="form-group">
 										    <label for="inputSalesPriceUnit4" class="col-sm-4 control-label">Status :</label>
-										    <div class="col-sm-8">
+										    <div class="col-sm-4">
 										      
 										      <select name="po_status" class="form-control">
 												  <option <?php if($row["po_status"] == "Pending"){echo " selected";}?> value="Pending">Pending</option>
@@ -128,6 +128,7 @@ if(isset($_POST['supplier_name']) && $_POST['supplier_name']!=""){
 												</select>
 
 										    </div>
+										    <div class="sm-4"></div>
 									  </div>
 									  	
 									</div>
@@ -143,7 +144,7 @@ if(isset($_POST['supplier_name']) && $_POST['supplier_name']!=""){
 					  	
 					
 			</div>
-			
+			<div class="col-md-2"></div>
 		</div>
 	</div>
 

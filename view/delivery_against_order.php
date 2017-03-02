@@ -70,7 +70,7 @@
 								<form class="navbar-form" role="search"style="width:94%;">
 							        <div class="form-group">
 							        	<label>Search Sales Orders :</label>
-							          <input type="text" class="form-control" name="username" placeholder="Search" id="customer_name"><i class="fa fa-search"></i>
+							          <input type="text" class="form-control" name="username" placeholder="Type Customer Name" id="customer_name"><i class="fa fa-search"></i>
 							        </div>
 							        
 							    </form>

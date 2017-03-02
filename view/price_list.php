@@ -83,11 +83,11 @@
 										    	<th>UOM</th>
 										    	<th>Purchase Cost/Unit</th>
 										    	<th>Sales Price/Unit</th>
-										    	<th>Warehouse</th>
+										    	<!-- <th>Warehouse</th>
 										    	<th>Shop</th>
 										    	<th>Total</th>
 										    	<th>Stock Value( Purchase Price)</th>
-										    	<th>Stock Value( Sales Price)</th>
+										    	<th>Stock Value( Sales Price)</th> -->
 										    	
 										    	
 										    </tr>
@@ -110,12 +110,12 @@
 											    	<td><?php echo $row['uom']; ?></td>
 											    	<td><?php echo $row['purchase_cost_per_unit']; ?></td>
 											    	<td><?php echo $row['sales_price_per_unit']; ?></td>
-											    	<td><?php echo $row['warehouse_stock']; ?></td>
-											    	<td><?php echo $row['shop_stock']; ?></td>
-											    	<td><?php echo $row['total_stock']; ?></td>
-											    	<td><?php echo $row['stock_value_on_purchase']; ?></td>
+											    	<!-- <td><?php //echo $row['warehouse_stock']; ?></td>
+											    	<td><?php //echo $row['shop_stock']; ?></td>
+											    	<td><?php //echo $row['total_stock']; ?></td>
+											    	<td><?php //echo $row['stock_value_on_purchase']; ?></td> -->
 											    	<!-- <td><?php //echo $row['stock_value']; ?></td> -->
-											    	<td><?php echo $row['stock_value_on_sale']; ?></td>
+											    	<!-- <td><?php// echo $row['stock_value_on_sale']; ?></td> -->
 											    	
 											    	
 
@@ -168,11 +168,11 @@
 				    	<th>UOM</th>
 				    	<th>Purchase Cost/Unit</th>
 				    	<th>Sales Price/Unit</th>
-				    	<th>Warehouse</th>
+				    	<!-- <th>Warehouse</th>
 				    	<th>Shop</th>
 				    	<th>Total</th>
 				    	<th>Stock Value( Purchase Price)</th>
-				    	<th>Stock Value( Sales Price)</th>
+				    	<th>Stock Value( Sales Price)</th> -->
 				    	<th>Action</th>
 				    	
 				    </tr>
@@ -196,12 +196,11 @@
 				    	<td><?php echo $row['uom']; ?></td>
 				    	<td><?php echo $row['purchase_cost_per_unit']; ?></td>
 				    	<td><?php echo $row['sales_price_per_unit']; ?></td>
-				    	<td><?php echo $row['warehouse_stock']; ?></td>
-				    	<td><?php echo $row['shop_stock']; ?></td>
-				    	<td><?php echo $row['total_stock']; ?></td>
-				    	<td><?php echo $row['stock_value_on_purchase']; ?></td>
-				    	<!-- <td><?php //echo $row['stock_value']; ?></td> -->
-				    	<td><?php echo $row['stock_value_on_sale']; ?></td>
+				    	<!-- <td><?php echo $row['warehouse_stock']; ?></td>
+				    	<td><?php //echo $row['shop_stock']; ?></td>
+				    	<td><?php //echo $row['total_stock']; ?></td>
+				    	<td><?php //echo $row['stock_value_on_purchase']; ?></td>
+				    	<td><?php //echo $row['stock_value_on_sale']; ?></td> -->
 				    	<td><a href="update_price_list.php?sl_no=<?php echo $row['sl_no']; ?>"><i class="fa fa-edit"style="color:green;"></i></a> &nbsp; <a href="delete_inventory_item.php?sl_no=<?php echo $row['sl_no']; ?>" onclick="return confirmDelete();"><i class="fa fa-trash"style="color:red;"></i></a></td>
 				    	
 

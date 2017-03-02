@@ -105,85 +105,69 @@ error_reporting(0);
 				<div class="col-md-12 no_padding">
 
 					<!-- start print option -->
-					<form action="welcome.php" method="POST">
+					<form class="form-horizontal" action="welcome.php" method="POST">
 						<div class="panel panel-info no_margin">
 						  <div class="panel-heading"><h4 style="text-align:center;">Add New Invoice</h4></div>
 						  	
-						  		<div class="panel-body">
+						  	<div class="panel-body">
 						  		<?php echo Utility::message(); ?>
-								<div class="view_top_date"  style="overflow:hidden;">
-									<div class="view_date pull-left" style="width:50%;float:left;">
+								<div class="row">
+									<div class="col-md-6 col-sm-6">
 										<div class="form-group">
-										    <label for="inputDate3" class="col-sm-3 no_padding control-label " style="width:20%;margin-left:10px;">Date:</label>
-										    <div class="col-sm-9" style="width:73%;float:right">
-										      	<input name="invoice_date" type="Date" class="form-control" id="inputDate3"required>
+										    <label class="col-sm-4 no_padding control-label ">Date:</label>
+										    <div class="col-sm-8">
+										      	<input name="invoice_date" type="Date" class="form-control"required>
 										    	<input type="hidden" name="customer_id">
 										    </div>
-										 </div>
-									</div>
-									<div class="view_invoice" style="width:50%;float:right;">
-										
+										</div>	
 										<div class="form-group">
-										    <label for="inputInvoice3" class="col-sm-4 no_padding control-label"style="width:40%;margin-left:10px;">Invoice No. :</label>
-										   
-										    <div id="likes" class=""style="width:55%;float:right;">
-										    	 <input type="text" class="form-control" name="invoice_no" value="<?php echo $invoice->show_invoice_number(); ?>" readonly />
-											</div>
-										</div> 
-									</div>
-								</div><!--  -->
-								<div class="view_address" style="overflow:hidden;">
-									<div class="view_a_name"style="width:100%;float:left;">
-										
-										<div class="form-group">
-										    <label for="inputCustomerName3" class="col-sm-3 no_padding control-label "style="    width: 30%;">Customer Name: </label>
-										    <div class="col-sm-9 "style="width: 70%;float: right;padding: 0;padding-right: 15px;">
+										    <label for="inputCustomerName3" class="col-sm-4 no_padding control-label">Customer Name: </label>
+										    <div class="col-sm-8 ">
 										      <input name="customer['customer_name']" type="text" class="form-control" id="inputCustomerName3" placeholder="Customer Name ">
 										    </div>
 										 </div>
-									</div>
-									<div class="view_a_phone"style="width:100%;float:left;">
 										<div class="form-group">
-										    <label for="inputCustomerphone3" class="col-sm-3 no_padding control-label" style="    width: 30%;">Phone : </label>
-										    <div class="col-sm-9 "style="width: 70%;float: right;padding: 0;padding-right: 15px;">
+										    <label for="inputCustomerphone3" class="col-sm-4 no_padding control-label">Customer Phone : </label>
+										    <div class="col-sm-8">
 										      <input name="customer['customer_phone']" type="tel" class="form-control" id="inputCustomerphone3" placeholder="Phone " required>
 										      <?php if(isset($errors["customer_phone"])){echo $errors["customer_phone"]; } ?>
 										    </div>
 										 </div>
-									</div>
-									<div class="view_a_address"style="width:100%;float:left;">
 										<div class="form-group">
-										    <label for="inputcustomerAddress3" class="col-sm-3 no_padding control-label"style="width: 23%;">Customer Address : </label>
-										    <div class="col-sm-9 pull-right no_padding">
-										      <textarea name="customer['customer_address']" class="form-control" rows="3"style="width: 90%;float: right;margin-right: 15px;"></textarea>
+										    <label for="inputcustomerAddress3" class="col-sm-4 no_padding control-label">Customer Address : </label>
+										    <div class="col-sm-8 pull-right ">
+										      <textarea name="customer['customer_address']" class="form-control" rows="3"></textarea>
 										    </div>
-										 </div>
-									</div>
-									<div class="view_a_phone"style="width:100%;float:left;">
+										 </div>	
+									</div>		 
+									<div class="col-md-6 col-sm-6">
 										<div class="form-group">
-										    <label for="inputCustomerpersonNa3" class="col-sm-3 no_padding control-label">Contact Person: </label>
-										    <div class="col-sm-9">
-										      <input name="customer['contact_person']" type="text" class="form-control" id="inputCustomerpersonNa3" placeholder="Contact Parson. ">
+										    <label class="col-sm-4 control-label">Invoice No. :</label>
+										   
+										    <div id="likes" class="col-sm-8">
+										    	<input type="text" class="form-control" name="invoice_no" value="<?php echo $invoice->show_invoice_number(); ?>" readonly />
+											</div>
+										</div>
+										<div class="form-group">
+										    <label class="col-sm-4 control-label">Contact Person: </label>
+										    <div class="col-sm-8">
+										      <input name="customer['contact_person']" type="text" class="form-control" placeholder="Contact Parson. ">
 										    </div>
 									    </div>
-									</div>
-									<div class="view_a_phone"style="width:100%;float:left;">
+									    <div class="form-group">
+										    <label class="col-sm-4 control-label">Contact No : </label>
+										    <div class="col-sm-8">
+										      <input name="customer['contact_person_no']" type="tel" class="form-control"placeholder="Contact No. ">
+										    </div>
+										</div>
 										<div class="form-group">
-										    <label for="inputCustomerpersonN3" class="col-sm-3 no_padding control-label">Contact No : </label>
-										    <div class="col-sm-9">
-										      <input name="customer['contact_person_no']" type="tel" class="form-control" id="inputCustomerpersonN3" placeholder="Contact No. ">
+										    <label class="col-sm-4 control-label">Notes : </label>
+										    <div class="col-sm-8">
+										      <textarea name="notes" class="form-control" rows="3"></textarea>
 										    </div>
 										 </div>
-									</div>
-								</div><!--  -->
-								<div class="notes"style="overflow:hidden;">
-									<div class="form-group">
-									    <label for="inputcustomerNotes3" class="col-sm-3 no_padding control-label">Notes : </label>
-									    <div class="col-sm-9 pull-right no_padding">
-									      <textarea name="notes" class="form-control" rows="3"></textarea>
-									    </div>
-									 </div>
-								</div><!--  -->
+									</div>		
+								</div>
 								<div class="view_center_folwchart">
 									<div class='row'>
 							      		<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
@@ -314,9 +298,12 @@ error_reporting(0);
 							      	</div>
 
 								</div>
-							</div>
-							<a href="view_invoice_pos.php"><button class="btn btn-success btn-lg" name=""style="margin: 15px auto;margin-left: 323px;">Confirm</button></a>
-						</div><!-- end panel body -->
+								<div class="confim_button">
+									<a href="view_invoice_pos.php"><button class="btn btn-success btn-lg" name="">Confirm</button></a>
+								</div>
+							</div><!-- end panel body -->
+							
+						</div>
 					</form>	  	
 						
 

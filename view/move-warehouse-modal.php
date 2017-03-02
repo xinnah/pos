@@ -116,14 +116,14 @@
 					  <div class="form-group">
 					    <label for="inputProductTotalQty3" class="col-sm-4 control-label">Total Shop Qty:</label>
 					    <div class="col-sm-8">
-					      <input name="shop_stock" type="number" id="wqty_" for="change" class="form-control" value="<?php echo $shop_stock; ?>">
+					      <input name="shop_stock" type="number" id="wqty" for="change" class="form-control" value="<?php echo $shop_stock; ?>">
 					    </div>
 					  </div>
 					  <div class="form-group">
 					    <label for="inputQty3" class="col-sm-4 control-label">Transfer Qty:</label>
 					    <div class="col-sm-8">
 
-					      <input type="number" min="0" max="<?php echo $shop_stock;?>" name="tr_warehouse_qty" class="form-control" for="change" id="shopmove_" >
+					      <input type="number" min="0" max="<?php echo $shop_stock;?>" name="tr_warehouse_qty" class="form-control"  id="shopmove" >
 					    </div>
 					  </div>
 					  
@@ -144,5 +144,21 @@
 		</div>
 	</div>
 </section>
+  <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
    
+	<script>
+		$('#shopmove').keyup(function(){
+			var quantity1 = $('#wqty').val();
+			var quantity2 = $('#shopmove').val();
+
+			if(parseInt(quantity1) < parseInt(quantity2)){
+				alert("Your store doesn't have sufficient stock");
+				$('#shopmove').val(quantity1);
+			}else if(parseInt(quantity2) < 0){
+				alert("Your store doesn't have sufficient stock");
+				$('#shopmove').val('0');
+			}
+		});
+		
+	</script> 
    <?php include('includes/footer.php'); ?>

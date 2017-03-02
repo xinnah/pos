@@ -91,20 +91,37 @@ class Replacement extends Model{
 
       $this->table = "replacement";
       if($this->insert($replacement_data)){
+        $id = mysqli_insert_id($this->connection);
         Utility::message("Item Replacement Process Successful");
-        Utility::redirect("replacement.php");
+        Utility::redirect("view_single_replacement.php?id={$id}");
       }else{
         Utility::message("Item Replacement Process Failed");
       }
   }
+
+  public function show_replacement($id = false){
+      $this->table = "replacement";
+    
+      $query = "SELECT * FROM {$this->table} WHERE `id`={$id}";
+      // echo $query; die();
+      $result = mysqli_query($this->connection,$query);
+
+
+      return $replacement = mysqli_fetch_object($result);
+
+  }
 	
 
-  public function show_replcement_history(){
+  public function show_replcement_history($invoice_no = false,$product = false){
     $this->table = "replacement";
-
+    $clause = "1=1";
+    if($invoice_no == true){
+        $clause = "`invoice_no`='{$invoice_no}' AND `previous_item` LIKE '%$product%'";
+    }
     $newArray = array();
 
-    $query = "SELECT * FROM {$this->table} ORDER BY `date` DESC";
+    $query = "SELECT * FROM {$this->table} WHERE {$clause} ORDER BY `date` DESC";
+    // echo $query; die();
     $result = mysqli_query($this->connection,$query);
 
 
@@ -132,7 +149,15 @@ class Replacement extends Model{
 			return $customer_no_fetch;
 	}
 
-	
+	public function replace_item_search($data = false){
+      $this->table = "inventory";
+      $query = "SELECT * FROM {$this->table} WHERE `barcode` = '{$data}'";
+      $result = mysqli_query($this->connection,$query);
+      $replace_item_fetch = mysqli_fetch_object($result);
+
+      // Utility::d($replace_item_fetch);
+      return $replace_item_fetch;
+  }
 
 
 

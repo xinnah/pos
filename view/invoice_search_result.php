@@ -80,7 +80,7 @@ if(isset($_POST['customer_phone']) && $_POST['customer_phone']!=""){
 		</div>
 	</div>
 	<div class="address_section">
-		<h3 class="pull_center">Invoice</h3>
+		
 		<div class="left_section">
 			<div class="cus_name">
 				<p class="left">Customer Name:</p>
@@ -98,10 +98,7 @@ if(isset($_POST['customer_phone']) && $_POST['customer_phone']!=""){
 				<p class="left">Customer Code:</p>
 				<p class="right"><?php echo $row['customer_id']; ?></p>
 			</div>
-			<!-- <div class="sales_agent">
-				<p class="left">Sales Agent:</p>
-				<p class="right">ASF EGY TG</p>
-			</div> -->
+			
 		</div>
 		<div class="right_section">
 			<div class="notes">
@@ -191,11 +188,7 @@ if(isset($_POST['customer_phone']) && $_POST['customer_phone']!=""){
 			    	<td colspan="1">Delivery Charge</td>
 			    	<td colspan="1"><?php echo $row['delivery_charge']; ?></td>
 			    </tr>
-			    <!-- <tr>
-			    	<td colspan="4"style="border: 0 !important;"></td>
-			    	<td colspan="1">Total</td>
-			    	<td><?php //echo $row['total']; ?></td>
-			    </tr> -->
+			    
 			    <tr>
 			    	<td colspan="5"style="border: 0 !important;"></td>
 			    	<td colspan="1">Paid</td>
@@ -218,13 +211,13 @@ if(isset($_POST['customer_phone']) && $_POST['customer_phone']!=""){
 		<h3>Terms & Condition:</h3>
 		<?php 
 
-		  	$startement = $db->prepare("SELECT * FROM terms_condition WHERE id=1");
-		  	$startement->execute();
-		  	$result = $startement->fetchAll(PDO::FETCH_ASSOC);
-		  	foreach ($result as $row) 
-		  		$invoice = $row['invoice'];
+		  	$startement1 = $db->prepare("SELECT * FROM terms_condition WHERE id=1");
+		  	$startement1->execute();
+		  	$result1 = $startement1->fetchAll(PDO::FETCH_ASSOC);
+		  	foreach ($result1 as $invoice) 
+		  		$invoice1 = $invoice['invoice'];
 		  		
-		  	echo $invoice;
+		  	echo $invoice1;
 
 		   ?>
 	</div>

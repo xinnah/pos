@@ -79,13 +79,12 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="sales_point">
-					<h2>sales point</h2>
+					<h2>quotation generate invoice</h2>
 				</div><!--  -->
 				 <div class="container">
 					<?php 
 					include('includes/admin_navigationbar.php'); ?> 
 				 
-				  
 				</div>
 			</div>
 		</div>
@@ -101,86 +100,69 @@
 				<div class="col-md-12 no_padding">
 
 					<!-- start print option -->
-					<form action="qutation_generate_invoice.php" method="POST">
+					<form class="form-horizontal" action="qutation_generate_invoice.php" method="POST">
 						<div class="panel panel-info no_margin">
 						  <div class="panel-heading"><h4 style="text-align:center;">Generate Invoice</h4></div>
-						  	
+						  	<?php echo Utility::message(); ?>
 						  		<div class="panel-body">
-						  		<?php echo Utility::message(); ?>
-								<div class="view_top_date"  style="overflow:hidden;">
-									<div class="view_date pull-left" style="width:50%;float:left;">
-										<div class="form-group">
-										    <label for="inputDate3" class="col-sm-3 no_padding control-label " style="width:20%;margin-left:10px;">Date:</label>
-										    <div class="col-sm-9" style="width:75%;float:right">
-										      	<input name="invoice_date" type="date" class="form-control" id="inputDate3" placeholder="Date" required>
-										    	<input type="hidden" name="customer_id">
-										    </div>
-										 </div>
-									</div>
-									<div class="view_invoice" style="width:50%;float:right;">
-										
-										<div class="form-group">
-										    <label for="inputInvoice3" class="col-sm-4 no_padding control-label"style="width:40%;margin-left:10px;">Invoice No. :</label>
-										   
-										    <div id="likes" class=""style="width:55%;float:right;">
-										    	 <input type="text" name="invoice_no" value="<?php echo $invoice->show_invoice_number(); ?>" />
+						  			<div class="row">
+						  				<div class="col-md-6 col-sm-6">
+						  					<div class="form-group">
+											    <label class="col-sm-4 control-label ">Date:</label>
+											    <div class="col-sm-8">
+											      	<input name="invoice_date" type="date" class="form-control" placeholder="Date" readonly>
+											    	<input type="hidden" name="customer_id">
+											    </div>
 											</div>
-										</div>
-										
-									</div>
-								</div><!--  -->
-								<div class="view_address" style="overflow:hidden;">
-									<div class="view_a_name"style="width:100%;float:left;">
-										
-										<div class="form-group">
-										    <label for="inputCustomerName3" class="col-sm-3 no_padding control-label "style="    width: 30%;">Customer Name: </label>
-										    <div class="col-sm-9 "style="width: 70%;float: right;padding: 0;padding-right: 15px;">
-										      <input name="customer['customer_name']" type="text" class="form-control" id="inputCustomerName3" value="<?php if(isset($customer->customer_name)){ echo $customer->customer_name;}; ?>">
+											<div class="form-group">
+											    <label class="col-sm-4 control-label ">Customer Name: </label>
+											    <div class="col-sm-8">
+											      <input name="customer['customer_name']" type="text" class="form-control" value="<?php if(isset($customer->customer_name)){ echo $customer->customer_name;}; ?>"readonly>
+											    </div>
+											</div>
+											<div class="form-group">
+											    <label class="col-sm-4 control-label">Customer Phone : </label>
+											    <div class="col-sm-8">
+											      <input name="customer['customer_phone']" type="tel" class="form-control" value="<?php if(isset($customer->customer_phone)){ echo $customer->customer_phone;}; ?>" placeholder="Phone " readonly>
+											      <?php if(isset($errors["customer_phone"])){echo $errors["customer_phone"]; } ?>
+											    </div>
+											</div>
+											<div class="form-group">
+											    <label class="col-sm-4 control-label">Customer Address : </label>
+											    <div class="col-sm-8">
+											      <textarea name="customer['customer_address']" class="form-control" rows="3" readonly><?php if(isset($customer->customer_address)){ echo $customer->customer_address;} ?></textarea>
+											    </div>
+											 </div> 
+						  				</div>
+						  				<div class="col-md-6 col-sm-6">
+						  					<div class="form-group">
+											    <label class="col-sm-4 control-label">Invoice No. :</label>
+											   
+											    <div id="likes" class="col-sm-8">
+											    	<input type="text" class="form-control" name="invoice_no" value="<?php echo $invoice->show_invoice_number(); ?>"  readonly/>
+												</div>
+											</div>
+											<div class="form-group">
+											    <label class="col-sm-4 control-label">Contact Person : </label>
+											    <div class="col-sm-8">
+											      <input name="customer['contact_person']" type="text" class="form-control" value="<?php if(isset($customer->contact_person)){ echo $customer->contact_person;}; ?>" placeholder="Contact Parson. " readonly>
+											    </div>
 										    </div>
-										 </div>
-									</div>
-									<div class="view_a_phone"style="width:100%;float:left;">
-										<div class="form-group">
-										    <label for="inputCustomerphone3" class="col-sm-3 no_padding control-label" style="    width: 30%;">Phone : </label>
-										    <div class="col-sm-9 "style="width: 70%;float: right;padding: 0;padding-right: 15px;">
-										      <input name="customer['customer_phone']" type="tel" class="form-control" id="inputCustomerphone3" value="<?php if(isset($customer->customer_phone)){ echo $customer->customer_phone;}; ?>" placeholder="Phone " required>
-										      <?php if(isset($errors["customer_phone"])){echo $errors["customer_phone"]; } ?>
-										    </div>
-										 </div>
-									</div>
-									<div class="view_a_address"style="width:100%;float:left;">
-										<div class="form-group">
-										    <label for="inputcustomerAddress3" class="col-sm-3 no_padding control-label"style="    width: 23%;">Customer Address : </label>
-										    <div class="col-sm-9 pull-right no_padding">
-										      <textarea name="customer['customer_address']" class="form-control" rows="3"style="    width: 88%;float: right;margin-right: 15px;"><?php if(isset($customer->customer_address)){ echo $customer->customer_address;} ?></textarea>
-										    </div>
-										 </div>
-									</div>
-									<div class="view_a_phone"style="width:100%;float:left;">
-										<div class="form-group">
-										    <label for="inputCustomerpersonNa3" class="col-sm-3 no_padding control-label">Contact Person : </label>
-										    <div class="col-sm-9">
-										      <input name="customer['contact_person']" type="text" class="form-control" id="inputCustomerpersonNa3"  value="<?php if(isset($customer->contact_person)){ echo $customer->contact_person;}; ?>" placeholder="Contact Parson. ">
-										    </div>
-									    </div>
-									</div>
-									<div class="view_a_phone"style="width:100%;float:left;">
-										<div class="form-group">
-										    <label for="inputCustomerpersonN3" class="col-sm-3 no_padding control-label">Contact No : </label>
-										    <div class="col-sm-9">
-										      <input name="customer['contact_person_no']" type="tel" class="form-control" id="inputCustomerpersonN3"  value="<?php if(isset($customer->contact_person_no)){ echo $customer->contact_person_no;}; ?>" placeholder="Contact No. ">
-										    </div>
-										 </div>
-									</div>
-								</div><!--  -->
-								<div class="notes"  style="overflow:hidden;">
-									<div class="form-group">
-									    <label for="inputcustomerNotes3" class="col-sm-3 no_padding control-label">Notes : </label>
-									    <div class="col-sm-9 pull-right">
-									      <textarea name="notes" class="form-control" rows="3"><?php if(isset($quotation->notes)){ echo $quotation->notes;} ?></textarea>
-									    </div>
-									 </div>
-								</div>
+										    <div class="form-group">
+											    <label class="col-sm-4 control-label">Contact No : </label>
+											    <div class="col-sm-8">
+											      <input name="customer['contact_person_no']" type="tel" class="form-control" value="<?php if(isset($customer->contact_person_no)){ echo $customer->contact_person_no;}; ?>" placeholder="Contact No. " readonly>
+											    </div>
+											</div>
+											<div class="form-group">
+											    <label class="col-sm-4 control-label">Notes : </label>
+											    <div class="col-sm-8">
+											      <textarea name="notes" class="form-control" rows="3"><?php if(isset($quotation->notes)){ echo $quotation->notes;} ?></textarea>
+											    </div>
+											 </div>
+						  				</div>
+						  			</div>
+								
 
 								<!--  -->
 								<div class="view_center_folwchart">
@@ -245,7 +227,7 @@
 																<?php if(isset($errors["uom"])){echo $errors["uom"]; } ?>
 															</td>
 															
-															<td><input type="text" data-type="productCost" name="cost_per_unit[]" id="cost_per_unit_1" class="form-control autocomplete_txt" autocomplete="off" value="<?php echo $cost_per_unit[$i] ?>"></td>
+															<td><input type="text" data-type="productCost" name="cost_per_unit[]" id="cost_per_unit_1" class="form-control autocomplete_txt" autocomplete="off" value="<?php echo $cost_per_unit[$i] ?>" readonly></td>
 															<td>
 																<input type="text" name="price[]" id="price_1" class="form-control changesNo" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;" value="<?php echo $price[$i] ?>">
 																<?php if(isset($errors["price"])){echo $errors["price"]; } ?>
@@ -262,7 +244,7 @@
 																<?php if(isset($errors["quantity"])){echo $errors["quantity"]; } ?>
 															</td>
 															<td>
-																<input type="text" name="amount[]" id="total_1" class="form-control totalLinePrice" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;" value="<?php echo $amount[$i] ?>">
+																<input type="text" name="amount[]" id="total_1" class="form-control totalLinePrice" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;" value="<?php echo $amount[$i] ?>" readonly>
 															</td>
 														</tr>
 											    <?php
@@ -304,7 +286,7 @@
 												<label>Vat Amount: &nbsp;</label>
 												<div class="input-group">
 													<div class="input-group-addon currency">৳</div>
-													<input value="" type="number" min="0" class="form-control" name="vat" id="taxAmount" placeholder="Vat" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;">
+													<input value="" type="number" min="0" class="form-control" name="vat" id="taxAmount" placeholder="Vat" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;" readonly>
 													
 												</div>
 											</div>
@@ -334,7 +316,7 @@
 												<label>Amount Due: &nbsp;</label>
 												<div class="input-group">
 													<div class="input-group-addon currency">৳</div>
-													<input value="" type="number" class="form-control amountDue" name="due"  id="amountDue" placeholder="Amount Due" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;">
+													<input value="" type="number" class="form-control amountDue" name="due"  id="amountDue" placeholder="Amount Due" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;" readonly>
 													
 													
 												</div>
@@ -345,9 +327,12 @@
 							      	</div>
 
 								</div>
-							</div>
-							<a href="view_invoice_pos.php"><button class="btn btn-success btn-lg" name=""style="margin: 15px auto;margin-left: 323px;">Confirm</button></a>
-						</div><!-- end panel body -->
+								<div class="confim_button">
+									<a href="view_invoice_pos.php"><button class="btn btn-success btn-lg" name="">Confirm</button></a>
+								</div>	
+							</div><!-- end panel body -->
+							
+						</div>
 					</form>	  	
 						
 

@@ -49,7 +49,7 @@
 					</div><!--  -->
 					
 					<div id="crop">
-						<div class="search_invoice">
+						<div class="search_invoice center_search_long">
 							<form class="navbar-form" role="search">
 						        <div class="form-group">
 						        	<label>Search Purchase Order :</label>

@@ -271,8 +271,13 @@
 								    </tr> -->
 								  </table>
 								</div><!--  -->
-								<p>Total:</p>
-								<p>BDT</p>
+								<p>Total:
+								<script src="js/inWords.js"></script>
+								BDT
+									<b><script>
+										document.write(inWords(<?php if(isset($quotation->total)){ echo $quotation->total;}; ?>));
+									</script></b>
+								</p>
 							  </div>									  
 							</div>
 							

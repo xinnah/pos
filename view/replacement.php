@@ -47,7 +47,7 @@ error_reporting(0);
 
 
 <header class="header_section">
-	<!-- top header -->
+	
 	
 	<div class="container">
 		<div class="row">

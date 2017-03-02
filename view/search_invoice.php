@@ -51,7 +51,7 @@
 					</div><!--  -->
 					
 					<div id="crop">
-						<div class="search_invoice">
+						<div class="search_invoice center_search">
 							<form class="navbar-form" role="search">
 						        <div class="form-group">
 						        	<label>Search For Invoice :</label>

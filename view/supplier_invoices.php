@@ -120,7 +120,7 @@
 									<div class="form-group">
 									    <label for="inputDate3" class="col-sm-3 no_padding control-label " style="width:20%;margin-left:10px;">Date:</label>
 									    <div class="col-sm-9" style="width:75%;float:right">
-									      <input name="date" type="Date" class="form-control" id="inputDate3" placeholder="Date">
+									      <input name="date" type="Date" class="form-control" id="inputDate3" placeholder="Date"required>
 									    </div>
 									 </div>
 								</div>

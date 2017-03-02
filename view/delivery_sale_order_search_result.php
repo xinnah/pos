@@ -30,22 +30,20 @@ if(isset($_POST['customer_name']) && $_POST['customer_name']!=""){
 						    <div class="table-responsive">
 							  <table class="table">
 							    <tr style="background: #2BAEA8;">
-							    	<th style="width:62px;">Date</th>
-							    	<th style="width:145px;">Order No</th>
-							    	<th style="width:62px;">Customer</th>
-							    	<th style="width:62px;">Address</th>
-							    	<th style="width:62px;">&nbsp;</th>
-							    	<th style="width:62px;">&nbsp;</th>
-							    	<th style="width:62px;">&nbsp;</th>
+							    	<th>Date</th>
+							    	<th>Order No</th>
+							    	<th>Customer</th>
+							    	<th>Address</th>
+							    	<th colspan="2">Action</th>
 							    </tr>
 							    <tr>
 							    	<td><?php echo $row['so_date']; ?></td>
 							    	<td><?php echo $row['sales_order_no']; ?></td>
 							    	<td><?php echo $row['customer_name']; ?></td>
 							    	<td><?php echo $row['customer_address']; ?></td>
-							    	<td><a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">View</a>
+							    	<td><a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal<?php echo $row['id']; ?>">View</a>
 
-							    	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+							    	<div class="modal fade" id="myModal<?php echo $row['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 									  <div class="modal-dialog" role="document"style="width:60%;">
 									    <div class="modal-content">
 									      <div class="modal-header">
@@ -233,7 +231,7 @@ if(isset($_POST['customer_name']) && $_POST['customer_name']!=""){
 
 
 							    	<td><a href="sales_generate_delivery_receipts.php?id=<?php echo $row['id']; ?>" class="btn btn-primary">Generate Delivery Receipt</a></td>
-							    	<td><a href="#" class="btn btn-primary">Delivery</a></td>
+							    	<!-- <td><a href="#" class="btn btn-primary">Delivery</a></td> -->
 							    </tr>
 							    
 							  </table>

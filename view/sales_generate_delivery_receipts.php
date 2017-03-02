@@ -158,7 +158,7 @@
 
 									</td>
 									<td>
-										<input id="total" type="text" for="change" class="form-control" value="0" name="remaining_quantity[]">	
+										<input id="total" type="text" for="change" class="form-control" value="0" name="remaining_quantity[]" readonly="readonly">	
 									<input type="hidden" name="delivered_by">
 									</td>
 								</tr>

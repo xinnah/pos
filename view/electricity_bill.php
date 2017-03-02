@@ -65,12 +65,12 @@
 	</div>
 	
 </header><!--  -->
-<section class="view_container_content">
+<section class="view_overhead_container">
 
-	<div class="container" style="background:#fff;width:53%;float:left;margin-left:110px;">
+	<div class="container">
 		<div class="row">
-
-			<div class="col-md-12 no_padding">
+			<div class="col-md-3"></div>
+			<div class="col-md-6 no_padding">
 
 				<!-- start print option -->
 				<form action="electricity_bill.php" method="post">
@@ -78,38 +78,39 @@
 					  <div class="panel-heading"><h4 style="text-align:center;">Add Electricity Bill</h4></div>
 					  	<?php echo Utility::message(); ?>
 					  	<div class="panel-body">
-							<div class="view_top_date"  style="overflow:hidden;">
-								<div class="view_date pull-left" style="width:50%;float:left;">
-									<div class="form-group">
-									    <label for="inputDate3" class="col-sm-2 control-label">Date :</label>
-									    <div class="col-sm-10">
-									      <input name="date" type="Date" class="form-control" id="inputDate3" placeholder="Date">
-									    </div>
-									</div>
-									<div class="form-group">
-									    <label for="inputMonth3" class="col-sm-2 control-label">Month :</label>
-									    <div class="col-sm-10">
-									      <input name="notes" type="text" class="form-control" id="inputMonth3" placeholder="Month">
-									      <?php if(isset($errors["notes"])){echo $errors["notes"]; } ?>
-									    </div>
-									</div>
-									<div class="form-group">
-									    <label for="inputAmount3" class="col-sm-2 control-label">Amount:</label>
-									    <div class="col-sm-10">
-									      <input name="total_cost" type="text" class="form-control" id="inputAmount3" placeholder="Amount">
-									      <?php if(isset($errors["total_cost"])){echo $errors["total_cost"]; } ?>
-									    </div>
-									</div>
-									 <input type="hidden" name="cost_label" value="Electricity Bill">
-								</div>
-							</div>	
-							<input class="btn btn-success btn-lg" type="submit" name="" value="Add"style="margin: 15px auto;margin-left: 323px;">
+							
+							<div class="form-group">
+							    <label for="inputDate3" class="col-sm-2 control-label">Date :</label>
+							    <div class="col-sm-10">
+							      <input name="date" type="Date" class="form-control" id="inputDate3" placeholder="Date"required>
+							    </div>
+							</div>
+							<div class="form-group">
+							    <label for="inputMonth3" class="col-sm-2 control-label">Month :</label>
+							    <div class="col-sm-10">
+							      <input name="notes" type="text" class="form-control" id="inputMonth3" placeholder="Month">
+							      <?php if(isset($errors["notes"])){echo $errors["notes"]; } ?>
+							    </div>
+							</div>
+							<div class="form-group">
+							    <label for="inputAmount3" class="col-sm-2 control-label">Amount:</label>
+							    <div class="col-sm-10">
+							      <input name="total_cost" type="text" class="form-control" id="inputAmount3" placeholder="Amount">
+							      <?php if(isset($errors["total_cost"])){echo $errors["total_cost"]; } ?>
+							    </div>
+							</div>
+							 <input type="hidden" name="cost_label" value="Electricity Bill">
+								<div class="confim_button">
+									<input class="btn btn-success btn-lg" type="submit" name="" value="Add">
+								</div>	
 						</div><!-- end panel body -->
 					</div>
 					  	
 				</form>	
 
 			</div>
+			<div class="col-md-3"></div>
+
 			
 		</div>
 	</div>

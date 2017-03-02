@@ -11,7 +11,9 @@
 
 	<!-- link include -->
 	<?php include('includes/all_link_body.php'); ?>
-
+<link href="css/jquery-ui.min.css" rel="stylesheet">
+<link href="css/datepicker.css" rel="stylesheet">
+<link rel="stylesheet" href="css/dataTables.bootstrap.min.css" />
 
 
 
@@ -55,8 +57,9 @@
 					  <div class="panel-heading"><h4 style="text-align:center;">Out Standing Purchase Order</h4></div>
 					  	
 					  	<div class="panel-body">
-							<div class="table-responsive">
 							  <table class="table">
+							    <thead>
+							    
 							    <tr style="background: #2BAEA8;">
 							    	<th>Sl No.</th>
 							    	<th>Date</th>
@@ -65,6 +68,8 @@
 							    	<th>Payment Due</th>
 							    	<th>Status</th>
 							    </tr>
+							    </thead>
+							    <tbody>
 							    <?php
 							    	$sl = 1; 
 							    	foreach ($all_purchase_order as $purchase_order) {
@@ -103,11 +108,10 @@
 							    		}
 							    	}
 							     ?>
+							    </tbody>
 							  </table>
-							</div><!--  -->	
 							
 						</div>
-						<a href="purchase.php"><input class="btn btn-success btn-lg" type="submit" name="add" value="Ok"style="margin: 15px auto;margin-left: 523px;"></a>
 					</div><!-- end panel body -->
 					  	
 					
@@ -117,5 +121,38 @@
 		</div>
 	</div>
 </section>
+	<footer class="main_footer_section">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="row">
+						<div class="col-sm-7">
+							<p>Korea IT</p>
+						</div>
+						<div class="col-sm-2">
+							<p>Binary Pos <span>v 1.0.0</span> </p>
+						</div>
+						<div class="col-sm-3">
+							<p>Copyright &copy; 2015 <a href="www.binary-logic.net">Binary Logic</a></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script src="js/jquery.min.js"></script>
 
-	<?php include('includes/footer.php'); ?>
+    <script src="js/bootstrap-datepicker-search.js"></script>
+    
+	<script src="js/dataTables.bootstrap-search.min.js"></script>
+	<script src="js/jquery.dataTables-search.min.js"></script>
+	<script src="js/script-search.js"></script>
+
+	<script>
+		$('table').dataTable();
+	</script>
+
+</body>
+</html>

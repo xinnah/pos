@@ -152,7 +152,7 @@ if(isset($_POST['supplier_name']) && $_POST['supplier_name']!=""){
 									  <input type="hidden" name="received_by" value="<?php if(isset($_SESSION["username"])){echo $_SESSION["username"];} ?>" />
 									  	
 									</div>
-									<button type="submit" class="btn btn-success btn-lg" name="" style="margin: 15px auto;margin-left: 323px;">Submit</button></a>
+									<button type="submit" class="btn btn-success btn-lg" name="" style="margin: 15px auto;margin-left: 200px;">Submit</button>
 
 
 								</form>

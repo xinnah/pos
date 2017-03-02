@@ -70,7 +70,8 @@ $(document).on('focus','.autocomplete_txt',function(){
 			$('#itemNo_'+id[1]).val(names[0]);
 			$('#itemName_'+id[1]).val(names[1]);
 			$('#uom_'+id[1]).val(names[4]);
-			$('#quantity_'+id[1]).val(1);
+			$('#quantity_'+id[1]).val(names[5]);
+			$('#quantity4_'+id[1]).val(1);
 			$('#price_'+id[1]).val(names[3]);
 			$('#price1_'+id[1]).val(names[2]);
 			
@@ -84,7 +85,7 @@ $(document).on('focus','.autocomplete_txt',function(){
 $(document).on('change keyup blur','.changesNo',function(){
 	id_arr = $(this).attr('id');
 	id = id_arr.split("_");
-	quantity = $('#quantity_'+id[1]).val();
+	quantity = $('#quantity4_'+id[1]).val();
 	price = $('#price_'+id[1]).val();
 	
 	if( quantity!='' && price !='' ) $('#total_'+id[1]).val( (parseFloat(price)*parseFloat(quantity)).toFixed(2) );
@@ -133,7 +134,9 @@ function calculateAmountDiscount(){
 	amountPaid1 = $('#amountPaid1').val();
 	//total = $('#totalAftertax').val();
 	if(amountPaid1 != '' && typeof(amountPaid1) != "undefined" ){
+		
 		amountDue = parseFloat(total) + parseFloat( amountPaid1 );
+		
 		$('.amountDue').val( amountDue.toFixed(2) );
 	}else{
 		total = parseFloat(total).toFixed(2);

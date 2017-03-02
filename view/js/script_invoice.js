@@ -11,12 +11,12 @@ $(".addmore").on('click',function(){
 	html += '<td><input type="text" data-type="barcode" name="barcode[]" id="itemNo_'+i+'" class="form-control autocomplete_txt" autocomplete="off"></td>';
 	html += '<td><input type="text" data-type="product_name" name="product_description[]" id="itemName_'+i+'" class="form-control autocomplete_txt" autocomplete="off"></td>';
 	html += '<td><input type="text" data-type="uom" name="uom[]" id="uom_'+i+'" class="form-control " autocomplete="off"></td>';
-	html += '<td><input type="text" name="cost_per_unit[]" id="price1_'+i+'" class="form-control changesNo" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;"></td>';
+	html += '<td><input type="text" name="cost_per_unit[]" id="price1_'+i+'" class="form-control changesNo" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;"readonly="readonly"></td>';
 	html += '<td><input type="number" min="0" name="price[]" id="price_'+i+'" class="form-control changesNo" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;"></td>';
 	html += '<td><input type="number" min="0" name="" id="quantity_'+i+'" class="form-control changesNo" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;" readonly="readonly">';
 	html += '<td><input type="number" min="0" name="quantity[]" id="quantity2_'+i+'" class="form-control changesNo" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;">';
 	html += '<input type="hidden" name="cost_amount[]" id="cost_'+i+'" class="form-control" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;"></td>';
-	html += '<td><input type="text" name="amount[]" id="total_'+i+'" class="form-control totalLinePrice" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;"></td>';
+	html += '<td><input type="text" name="amount[]" id="total_'+i+'" class="form-control totalLinePrice" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;"readonly="readonly"></td>';
 	
 	html += '</tr>';
 	$('#table_auto').append(html);

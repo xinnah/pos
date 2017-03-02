@@ -78,7 +78,7 @@ if(isset($_POST['customer_phone']) && $_POST['customer_phone']!=""){
 		</div>
 	</div>
 	<div class="address_section">
-		<h3 class="pull_center">Invoice</h3>
+		
 		<div class="left_section">
 			<div class="cus_name">
 				<p class="left">Customer Name:</p>
@@ -196,18 +196,20 @@ if(isset($_POST['customer_phone']) && $_POST['customer_phone']!=""){
 			    </tr> -->
 			    <tr>
 			    	<td colspan="5"style="border: 0 !important;"></td>
-			    	<td colspan="1">Paid</td>
-			    	<td colspan="1"><?php if(isset($row['paid'])){ echo $row['paid'];} ?></td>
+			    	<td colspan="1">Total</td>
+			    	<td colspan="1"><?php if(isset($row['total'])){ echo $row['total'];} ?></td>
 			    </tr>
-			    <tr>
-			    	<td colspan="5"style="border: 0 !important;"></td>
-			    	<td colspan="1">Due: </td>
-			    	<td><?php if(isset($row['due'])){ echo $row['due'];} ?></td>
-			    </tr>
+			    
 			  </table>
-			</div><!--  -->
-			<!-- <p>Total:</p>
-			<p>BDT</p> -->
+			</div>
+			<!-- <p>Dues:
+				<script src="js/inWords.js"></script>
+			BDT
+				<b><script type="text/javascript">
+					document.write(inWords(<?php// if(isset($sales_order->due)){ echo $sales_order->due;}?>));
+				</script></b>
+			</p> -->
+			
 		  </div>									  
 		</div>
 		
@@ -216,10 +218,10 @@ if(isset($_POST['customer_phone']) && $_POST['customer_phone']!=""){
 		<h3>Terms & Condition:</h3>
 		<?php 
 
-		  	$startement = $db->prepare("SELECT * FROM terms_condition WHERE id=1");
-		  	$startement->execute();
-		  	$result = $startement->fetchAll(PDO::FETCH_ASSOC);
-		  	foreach ($result as $rows) 
+		  	$startement1 = $db->prepare("SELECT * FROM terms_condition WHERE id=1");
+		  	$startement1->execute();
+		  	$result1 = $startement1->fetchAll(PDO::FETCH_ASSOC);
+		  	foreach ($result1 as $rows) 
 		  		$quotation = $rows['quotation'];
 		  		
 		  	echo $quotation;

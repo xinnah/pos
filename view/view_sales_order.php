@@ -245,9 +245,14 @@
 								    	<td><?php if(isset($sales_order->due)){ echo $sales_order->due;} ?></td>
 								    </tr>
 								  </table>
-								</div><!--  -->
-								<!-- <p>Total:</p>
-								<p>BDT</p> -->
+								</div>
+								<p>Dues:
+								<script src="js/inWords.js"></script>
+								BDT
+									<b><script>
+										document.write(inWords(<?php if(isset($sales_order->due)){ echo $sales_order->due;}?>));
+									</script></b>
+								</p>
 							  </div>									  
 							</div>
 							

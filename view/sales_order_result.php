@@ -215,10 +215,10 @@ if(isset($_POST['customer_phone']) && $_POST['customer_phone']!=""){
 		<h3>Terms & Condition:</h3>
 		<?php 
 
-		  	$startement = $db->prepare("SELECT * FROM terms_condition WHERE id=1");
-		  	$startement->execute();
-		  	$result = $startement->fetchAll(PDO::FETCH_ASSOC);
-		  	foreach ($result as $rows) 
+		  	$startement1 = $db->prepare("SELECT * FROM terms_condition WHERE id=1");
+		  	$startement1->execute();
+		  	$result1 = $startement1->fetchAll(PDO::FETCH_ASSOC);
+		  	foreach ($result1 as $rows) 
 		  		$sales = $rows['sales'];
 		  		
 		  	echo $sales;

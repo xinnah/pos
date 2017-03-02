@@ -148,83 +148,66 @@
 				<div class="panel panel-info no_margin">
 					  <div class="panel-heading"><h4 style="text-align:center;">Add New Quotation</h4></div>
 
-					<form action="add_quotation.php" method="POST">
+					<form class="form-horizontal" action="add_quotation.php" method="POST">
 
 					  	<div class="panel-body">
 					  		<?php echo Utility::message(); ?>
-							<div class="view_top_date">
-								<div class="view_date">
+							<div class="row">
+								<div class="col-md-6 col-sm-6">
 									<div class="form-group">
-									    <label for="inputDate3" class="col-sm-3 no_padding control-label">Date:</label>
-									    <div class="col-sm-9">
-									      <input name="quotation_date" type="date" class="form-control" id="inputDate3" placeholder="Date" required>
+									    <label class="col-sm-4 control-label">Date:</label>
+									    <div class="col-sm-8">
+									      <input name="quotation_date" type="date" class="form-control"  placeholder="Date" required>
 									      <input type="hidden" name="customer_id">
 									    </div>
 									 </div>
-								</div>
-								<div class="view_invoice">
-									
-									<div class="form-group">
-									    <label for="inputInvoice3" class="col-sm-3 no_padding control-label">Ref No. :</label>
-									    <div class="col-sm-9">
-									      <input name="quotation_no" type="text" class="form-control" id="inputInvoice3"value="<?php echo $quotation->show_quotation_number(); ?>"readonly>
+									 <div class="form-group">
+									    <label class="col-sm-4 control-label">Customer Name : </label>
+									    <div class="col-sm-8">
+									      <input name="customer['customer_name']" type="text" class="form-control" placeholder="Customer Name ">
 									    </div>
 									 </div>
-								</div>
-							</div><!--  -->
-							<div class="view_address">
-								<div class="view_a_name">
-									
-									<div class="form-group">
-									    <label for="inputCustomerName3" class="col-sm-3 no_padding control-label">Customer Name : </label>
-									    <div class="col-sm-9">
-									      <input name="customer['customer_name']" type="text" class="form-control" id="inputCustomerName3" placeholder="Customer Name ">
-									    </div>
-									 </div>
-								</div>
-								<div class="view_a_phone">
-									<div class="form-group">
-									    <label for="inputCustomerphone3" class="col-sm-3 no_padding control-label">Customer Phone : </label>
-									    <div class="col-sm-9">
-									      <input name="customer['customer_phone']" type="tel" class="form-control" id="inputCustomerphone3" placeholder="Phone " required>
+									 <div class="form-group">
+									    <label class="col-sm-4 control-label">Customer Phone : </label>
+									    <div class="col-sm-8">
+									      <input name="customer['customer_phone']" type="tel" class="form-control" placeholder="Phone " required>
 									      <?php if(isset($errors["customer_phone"])){echo $errors["customer_phone"]; } ?>
 									    </div>
 									 </div>
-								</div>
-								<div class="view_a_address">
-									<div class="form-group">
-									    <label for="inputcustomerAddress3" class="col-sm-3 no_padding control-label">Customer Address : </label>
-									    <div class="col-sm-9">
+									 <div class="form-group">
+									    <label class="col-sm-4 control-label">Customer Address : </label>
+									    <div class="col-sm-8">
 									      <textarea name="customer['customer_address']" class="form-control" rows="3"></textarea>
 									    </div>
 									 </div>
-									
 								</div>
-								<div class="contact_parson">
+								<div class="col-md-6 col-sm-6">
 									<div class="form-group">
-									    <label for="inputCustomerpersonNa3" class="col-sm-3 no_padding control-label">Contact Person : </label>
-									    <div class="col-sm-9">
-									      <input name="customer['contact_person']" type="text" class="form-control" id="inputCustomerpersonNa3" placeholder="Contact Parson. ">
+									    <label class="col-sm-4 control-label">Ref No. :</label>
+									    <div class="col-sm-8">
+									      <input name="quotation_no" type="text" class="form-control"value="<?php echo $quotation->show_quotation_number(); ?>"readonly>
+									    </div>
+									</div>
+									<div class="form-group">
+									    <label class="col-sm-4 control-label">Contact Person : </label>
+									    <div class="col-sm-8">
+									      <input name="customer['contact_person']" type="text" class="form-control" placeholder="Contact Parson. ">
 									    </div>
 								    </div>
-								</div>
-								<div class="contact_no">
 									<div class="form-group">
-									    <label for="inputCustomerpersonN3" class="col-sm-3 no_padding control-label">Contact No : </label>
-									    <div class="col-sm-9">
-									      <input name="customer['contact_person_no']" type="tel" class="form-control" id="inputCustomerpersonN3" placeholder="Contact No. ">
+									    <label class="col-sm-4 control-label">Contact No : </label>
+									    <div class="col-sm-8">
+									      <input name="customer['contact_person_no']" type="tel" class="form-control" placeholder="Contact No. ">
 									    </div>
-									 </div>
+									</div>
+									<div class="form-group">
+									    <label class="col-sm-4 control-label">Notes : </label>
+									    <div class="col-sm-8">
+									      <textarea name="notes" class="form-control" rows="3"></textarea>
+									    </div>
+									</div>
 								</div>
-							</div><!--  -->
-							<div class="notes">
-								<div class="form-group">
-								    <label for="inputcustomerNotes3" class="col-sm-3 no_padding control-label">Notes : </label>
-								    <div class="col-sm-9">
-								      <textarea name="notes" class="form-control" rows="3"></textarea>
-								    </div>
-								 </div>
-							</div><!--  -->
+							</div>
 							<div class="view_center_folwchart">
 								<div class='row'>
 						      		<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
@@ -349,7 +332,9 @@
 						      	</div>
 
 							</div>
-							<a href="view_quotation.php"><button class="btn btn-success btn-lg pull-right" name="">Confirm</button></a>
+							<div class="confim_button">	
+								<a href="view_quotation.php"><button class="btn btn-success btn-lg" name="">Confirm</button></a>
+							</div>	
 						</div>
 					</form>	
 				</div>

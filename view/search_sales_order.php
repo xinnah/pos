@@ -7,8 +7,6 @@
 	$(document).ready(function(){
 		$("#customer_phone").keyup(function(){
 			var customer_phone = $("#customer_phone").val();
-			
-			
 			$.ajax({
 				type:"POST",
 				url:"sales_order_result.php",
@@ -51,7 +49,7 @@
 					</div><!--  -->
 					
 					<div id="crop">
-						<div class="search_invoice">
+						<div class="search_invoice center_search">
 							<form class="navbar-form" role="search">
 						        <div class="form-group">
 						        	<label>Search Sales Order :</label>

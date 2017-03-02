@@ -12,6 +12,8 @@
 		foreach ($_POST as $key => $value) {
 			if($key == "product_name" && empty($_POST[$key])){
 				$errors[$key] = ucfirst(Utility::removeUnderScore($key))." can't empty"; 
+			}elseif($key == "barcode" && empty($_POST[$key])){
+				$errors[$key] = ucfirst(Utility::removeUnderScore($key))." can't empty"; 
 			}elseif($key == "uom" && empty($_POST[$key])){
 				$errors[$key] = ucfirst(Utility::removeUnderScore($key))." can't empty"; 
 			}elseif($key == "purchase_cost_per_unit" && empty($_POST[$key])){
@@ -81,10 +83,10 @@
 </header><!--  -->
 <section class="view_container_content">
 
-<div class="container" style="background:#fff;width:55%;float:left;margin-left:110px;">
+<div class="container">
 	<div class="row">
-
-		<div class="col-md-12 no_padding">
+		<div class="col-md-2"></div>
+		<div class="col-md-8 no_padding">
 
 			<!-- start print option -->
 
@@ -92,13 +94,14 @@
 				  <div class="panel-heading"><h4 style="text-align:center;">Add New Item To Inventory</h4></div>
 				  		<div class="panel-body">
 				  		<?php echo Utility::message(); ?>
-				<form class="form-horizontal" action="add_items_to_inventory.php" method="post">
+							<form class="form-horizontal" action="add_items_to_inventory.php" method="post">
 							  <div class="customer_info">
 
 								  <div class="form-group">
 									    <label for="inputBar3" class="col-sm-3 control-label">BarCode :</label>
 									    <div class="col-sm-9">
-									      <input name="barcode" type="text" class="form-control" id="inputBar3" placeholder="BarCode">
+									      <input name="barcode" type="text" class="form-control" id="inputBar3" value="<?php if(isset($_POST["barcode"])){echo $_POST["barcode"]; } ?>">
+									      <?php if(isset($errors["barcode"])){echo $errors["barcode"]; } ?>
 									    </div>
 								  </div>
 
@@ -183,8 +186,8 @@
 									      <input type="number" min="0"id="change2" name="purchase_cost_per_unit" value="<?php if(isset($_POST["purchase_cost_per_unit"])){echo $_POST["purchase_cost_per_unit"]; }else{ echo "0";} ?>" class="form-control" onchange="calc()">
 									      <?php if(isset($errors["purchase_cost_per_unit"])){echo $errors["purchase_cost_per_unit"]; } ?>
 										  </div>
-									    </div>
-								  </div>
+									</div>
+								</div>
 								  <div class="form-group">
 									    <label for="inputSalesPriceUnit3" class="col-sm-3 control-label">Sales Price/Unit :</label>
 									    <div class="col-sm-9">
@@ -224,16 +227,51 @@
 									      <input type="hidden" name="added_by" value="<?php if(isset($_SESSION["username"])){echo $_SESSION["username"];} ?>">
 									    </div>
 								  </div>	
-								</div>
-					</div>
+						<div class="confim_button">	
+							<button class="btn btn-success btn-lg" name="">Add Item</button>
+						</div>	
+					</form>
 				</div><!-- end panel body -->
 				  	
-				<button class="btn btn-success btn-lg" name=""style="margin: 15px auto;margin-left: 323px;">Add Item</button>
-				</form>
+				
 		</div>
 		
 	</div>
+	<div class="col-md-2"></div>
 </div>
 </section>
-
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#change2").keyup(function(){
+			var cost_price_value = $(this).val();
+			if(cost_price_value < 0){
+				$(this).val('0');
+			}			
+		});
+		$("#total1").keyup(function(){
+			var sales_price_value = $(this).val();
+			if(sales_price_value < 0){
+				$(this).val('0');
+			}			
+		});
+		$("#change").keyup(function(){
+			var warehouse_value = $(this).val();
+			if(warehouse_value < 0){
+				$(this).val('0');
+			}			
+		});
+		$("#change1").keyup(function(){
+			var shop_value = $(this).val();
+			if(shop_value < 0){
+				$(this).val('0');
+			}
+		});
+		$("#paid").keyup(function(){
+			var paid_value = $(this).val();
+			if(paid_value < 0){
+				$(this).val('0');
+			}
+		});		
+	});
+</script>
 	<?php include('includes/footer.php'); ?>

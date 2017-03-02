@@ -2,6 +2,9 @@
 	<!-- link include -->
 	<?php include('includes/all_link_body.php'); ?>
 <!-- jquery ajax live search -->
+<style type="text/css">
+	
+</style>
 <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -51,7 +54,7 @@
 					</div><!--  -->
 					
 					<div id="crop">
-						<div class="search_invoice">
+						<div class="search_invoice center_search">
 							<form class="navbar-form" role="search">
 						        <div class="form-group">
 						        	<label>Search For Quotation :</label>

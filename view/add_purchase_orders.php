@@ -90,10 +90,10 @@
 </header><!--  -->
 <section class="view_container_content">
 
-	<div class="container" style="background:#fff;width:55%;float:left;margin-left:110px;">
+	<div class="container">
 		<div class="row">
-
-			<div class="col-md-12 no_padding">
+			<div class="col-md-2"></div>
+			<div class="col-md-8 no_padding">
 
 				<!-- start print option -->
 
@@ -225,6 +225,7 @@
 					
 
 			</div>
+			<div class="col-md-2"></div>
 			
 		</div>
 	</div>
@@ -234,14 +235,35 @@
 	<script type="text/javascript">
 	$(document).ready(function(){
 		$("#price1").keyup(function(){
-			var replace_quantity_value = $(this).val();
-			if(replace_quantity_value < 0){
+			var price_value = $(this).val();
+			if(price_value < 0){
+				$(this).val('0');
+			}			
+		});
+		$("#change").keyup(function(){
+			var vat_value = $(this).val();
+			if(vat_value < 0){
+				$(this).val('0');
+			}			
+		});
+		$("#tax").keyup(function(){
+			var tax_value = $(this).val();
+			if(tax_value < 0){
+				$(this).val('0');
+			}			
+		});
+		$("#delieryCharge").keyup(function(){
+			var delieryCharge_value = $(this).val();
+			if(delieryCharge_value < 0){
 				$(this).val('0');
 			}
-			
 		});
-		
+		$("#paid").keyup(function(){
+			var paid_value = $(this).val();
+			if(paid_value < 0){
+				$(this).val('0');
+			}
+		});		
 	});
-
 </script>
 	<?php include('includes/footer.php'); ?>

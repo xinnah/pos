@@ -179,6 +179,13 @@ class Inventory extends Model{
 
 	public function add_items_to_inventory($data = array()){
 		$this->table = "inventory";
+		$barcode = $data['barcode'];
+
+		$barcode_query = mysqli_query($this->connection,"SELECT * FROM {$this->table} WHERE `barcode`='{$barcode}'");
+		if($barcode_query && mysqli_affected_rows($this->connection)){
+			Utility::message("This barcode is already exists");
+          	Utility::redirect("add_items_to_inventory.php");
+		};
 
 		$purchase_cost_per_unit = $data['purchase_cost_per_unit'];
 		$sales_price_per_unit = $data['sales_price_per_unit'];
@@ -188,7 +195,7 @@ class Inventory extends Model{
 
         if($this->insert($data)){
           Utility::message("Inventory item has been created successfully");
-          Utility::redirect("inventory.php");
+          Utility::redirect("view_stock.php");
         }else{
           Utility::message("Inventory item addition Failed");
         }

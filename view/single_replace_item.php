@@ -1,54 +1,42 @@
-<?php
-error_reporting(0);
-    session_start();
-    include_once $_SERVER['DOCUMENT_ROOT'].DIRECTORY_SEPARATOR.'pos'.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'autoload.php';
-	if(!isset($_SESSION["username"])){
-		header("Location: index.php");
-	}
-
- ?>
+<?php include_once 'start.php';?>
 <?php 
 	use App\Utility\Utility;
 	use App\Replacement\Replacement;
 	use App\Customer\Customer;
 
 	$customer = new Customer;
-	// if(isset($_REQUEST["submit"])){
- //    	Utility::dd($_REQUEST);
- //    }
-
-	// Utility::dd($_REQUEST);
+	
     $replacement_data = array();
     if(count($_REQUEST) > 0){
 	    foreach ($_REQUEST as $key => $value) {
 
 	        if($key == "barcode"){
 	          foreach ($_REQUEST[$key] as $customer_key => $customer_value) {
-	            $replacement_data[$key] = implode(" , ", $_REQUEST[$key]);;
+	            $replacement_data[$key] = implode(" , ", $_REQUEST[$key]);
 	          }
 	        }elseif($key == "product_description"){
 	          foreach ($_REQUEST[$key] as $customer_key => $customer_value) {
-	            $replacement_data[$key] = implode(" , ", $_REQUEST[$key]);;
+	            $replacement_data[$key] = implode(" , ", $_REQUEST[$key]);
 	          }
 	        }elseif($key == "uom"){
 	          foreach ($_REQUEST[$key] as $customer_key => $customer_value) {
-	            $replacement_data[$key] = implode(" , ", $_REQUEST[$key]);;
+	            $replacement_data[$key] = implode(" , ", $_REQUEST[$key]);
 	          }
 	        }elseif($key == "cost_per_unit"){
 	          foreach ($_REQUEST[$key] as $customer_key => $customer_value) {
-	            $replacement_data[$key] = implode(" , ", $_REQUEST[$key]);;
+	            $replacement_data[$key] = implode(" , ", $_REQUEST[$key]);
 	          }
 	        }elseif($key == "price_per_unit"){
 	          foreach ($_REQUEST[$key] as $customer_key => $customer_value) {
-	            $replacement_data[$key] = implode(" , ", $_REQUEST[$key]);;
+	            $replacement_data[$key] = implode(" , ", $_REQUEST[$key]);
 	          }
 	        }elseif($key == "quantity"){
 	          foreach ($_REQUEST[$key] as $customer_key => $customer_value) {
-	            $replacement_data[$key] = implode(" , ", $_REQUEST[$key]);;
+	            $replacement_data[$key] = implode(" , ", $_REQUEST[$key]);
 	          }
 	        }elseif($key == "amount"){
 	          foreach ($_REQUEST[$key] as $customer_key => $customer_value) {
-	            $replacement_data[$key] = implode(" , ", $_REQUEST[$key]);;
+	            $replacement_data[$key] = implode(" , ", $_REQUEST[$key]);
 	          }
 	        }else{
 	          $replacement_data[$key] = $value;
@@ -59,11 +47,19 @@ error_reporting(0);
     if(isset($replacement_data["customer_id"])){
     	$customer_info = $customer->show_customer($replacement_data["customer_id"]);
     }
+    $replacement = new Replacement;
+	$previous_item = $replacement->show_replcement_history($replacement_data["invoice_no"],$replacement_data["product_description"]);
+	$total = 0;
+	foreach($previous_item  as $key ){
+		$prev_item = unserialize($key->previous_item);
+		$total += trim($prev_item["quantity"]);
+	};
+		
 
     
-    // Utility::dd($replacement_data);
-    // $obj = new Replacement;
-    // $obj->create_replacement($_REQUEST);
+    // Utility::d($_REQUEST["replaced_item"]["uom"]);
+    $obj = new Replacement;
+    $obj->create_replacement($_REQUEST);
 ?>
 	<!-- link include -->
 	<?php include('includes/all_link_body.php'); ?>
@@ -72,10 +68,84 @@ error_reporting(0);
 	.form-inline .input-group {float: right;}
 </style>
 <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
-    
+<script type="text/javascript">
+	
+	  		/**/
+			
+$(document).on('focus','.autocomplete_txt',function(){
+	type = $(this).data('type');
+	
+	if(type =='barcode' )autoTypeNo=0;
+	if(type =='product_name' )autoTypeNo=1; 	
+	
+	$(this).autocomplete({
+		source: function( request, response ) {
+			$.ajax({
+				url : 'ajax.php',
+				dataType: "json",
+				method: 'post',
+				data: {
+				   name_startsWith: request.term,
+				   type: type
+				},
+				 success: function( data ) {
+					 response( $.map( data, function( item ) {
+					 	var code = item.split("|");
+						return {
+							label: code[autoTypeNo],
+							value: code[autoTypeNo],
+							data : item
+						}
+					}));
+				}
+			});
+		},
+		autoFocus: true,	      	
+		minLength: 0,
+		appendTo: "#modal-fullscreen",
+		select: function( event, ui ) {
+			var names = ui.item.data.split("|");
+			id_arr = $(this).attr('id');
+	  		id = id_arr.split("_");
+	  		console.log(names, id);
 
 
 
+	  		
+			$('#itemNo_'+id[1]).val(names[0]);
+			$('#itemName_'+id[1]).val(names[1]);
+			$('#uom_'+id[1]).val(names[4]);
+			$('#quantity2_'+id[1]).val(1);
+			$('#price2_'+id[1]).val(names[3]);
+			$('#price1_'+id[1]).val(names[2]);
+			
+			$('#total2_'+id[1]).val( 1*names[3] );
+			calculateTotal();
+		}		      	
+	});
+});
+
+//price change
+$(document).on('change keyup blur','.changesNo',function(){
+	id_arr = $(this).attr('id');
+	id = id_arr.split("_");
+	quantity = $('#quantity2_'+id[1]).val();
+	price = $('#price2_'+id[1]).val();
+	
+	if( quantity!='' && price !='' ) $('#total2_'+id[1]).val( -(parseFloat(price)*parseFloat(quantity)).toFixed(0) );
+		
+	calculateTotal();
+});
+
+$(document).on('change keyup blur','#tax',function(){
+	calculateTotal();
+});
+
+
+
+
+/**/
+</script>    
 
 
 <header class="header_section">
@@ -159,79 +229,61 @@ error_reporting(0);
 	</div>
 </header><!--  -->
 <section class="view_container_content">
-
 	<div class="container-fulid">
 		<div class="col-md-12">
 			<div class="row">
-
 				<div class="col-md-12 no_padding">
-
-					<!-- start print option -->
-
 					<div class="panel panel-info no_margin">
 						<div class="panel-heading"><h4 style="text-align:center;">Replacement</h4></div>
-						  	<form action="test.php" method="post">
+						  	<form name="myForm" class="form-horizontal" action="single_replace_item.php" method="post">
 						  		<div class="panel-body">
-								<div class="view_top_date"  style="overflow:hidden;">
-									<div class="view_date pull-left" style="width:50%;float:left;">
-										<div class="form-group">
-										    <label for="inputDate3" class="col-sm-3 no_padding control-label " style="width:20%;margin-left:10px;">Date:</label>
-										    <div class="col-sm-9" style="width:73%;float:right">
-										      <input name="date" type="date" class="form-control" id="inputDate3" placeholder="Date" required>
-										      <input type="hidden" name="customer_id" value="<?php if(isset($replacement_data["customer_id"])){echo $replacement_data["customer_id"];}  ?>">
-										    </div>
-										 </div>
-									</div>
-									<div class="view_invoice" style="width:50%;float:right;">
-										
-										<div class="form-group">
-										    <label for="inputInvoice3" class="col-sm-4 no_padding control-label"style="width:40%;margin-left:10px;">Invoice No. :</label>
-										   
-										    <div id="likes" class=""style="width:55%;float:right;">
-										    	 <input type="text" name="invoice_no" class="form-control" value="<?php if(isset($replacement_data["invoice_no"])){echo $replacement_data["invoice_no"];}  ?>">
+						  			<div class="row">
+						  				<div class="col-md-6 col-sm-6">
+						  					<div class="form-group">
+											    <label class="col-sm-4 control-label ">Date:</label>
+											    <div class="col-sm-8">
+											      <input name="date" type="date" class="form-control" id="inputDate3" placeholder="Date" required>
+											      <input type="hidden" name="customer_id" value="<?php if(isset($replacement_data["customer_id"])){echo $replacement_data["customer_id"];}  ?>">
+											    </div>
 											</div>
-											
-										</div>
-
-									</div>
-								</div><!--  -->
-								<div class="view_address" style="overflow:hidden;">
-									<div class="view_a_name"style="width:100%;float:left;">
-										
-										<div class="form-group">
-										    <label for="inputCustomerName3" class="col-sm-3 no_padding control-label "style="    width: 30%;">Customer Name : </label>
-										    <div class="col-sm-9 "style="width: 70%;float: right;padding: 0;padding-right: 15px;">
-										      <input name="" type="text" class="form-control" id="inputCustomerName3" placeholder="Customer Name " value="<?php if(isset($customer_info->customer_name)){echo $customer_info->customer_name;} ?>">
-										    </div>
-										 </div>
-									</div>
-									<div class="view_a_phone"style="width:100%;float:left;">
-										<div class="form-group">
-										    <label for="inputCustomerphone3" class="col-sm-3 no_padding control-label" style="    width: 30%;">Phone : </label>
-										    <div class="col-sm-9 "style="width: 70%;float: right;padding: 0;padding-right: 15px;">
-										      <input name="" type="tel" class="form-control" id="inputCustomerphone3" placeholder="Phone " value="<?php if(isset($customer_info->customer_phone)){echo $customer_info->customer_phone;} ?>" required>
-										      
-										    </div>
-										 </div>
-									</div>
-									<div class="view_a_address"style="width:100%;float:left;">
-										<div class="form-group">
-										    <label for="inputcustomerAddress3" class="col-sm-3 no_padding control-label"style="    width: 23%;">Customer Address: </label>
-										    <div class="col-sm-9 pull-right no_padding">
-										      <textarea name="" class="form-control" rows="3"style="    width: 90%;float: right;margin-right: 15px;"><?php if(isset($customer_info->customer_address)){echo $customer_info->customer_address;} ?></textarea>
-										    </div>
-										 </div>
-									</div>
-									
-								</div><!--  -->
-								<div class="notes"  style="overflow:hidden;">
-									<div class="form-group">
-									    <label for="inputcustomerNotes3" class="col-sm-3 no_padding control-label">Notes : </label>
-									    <div class="col-sm-9 pull-right no_padding">
-									      <textarea name="notes" class="form-control" rows="3"></textarea>
-									    </div>
-									 </div>
-								</div><!--  -->
+											<div class="form-group">
+											    <label class="col-sm-4 control-label ">Customer Name : </label>
+											    <div class="col-sm-8">
+											      <input name="" type="text" class="form-control" placeholder="Customer Name " value="<?php if(isset($customer_info->customer_name)){echo $customer_info->customer_name;} ?>" readonly>
+											    </div>
+											</div>
+											<div class="form-group">
+											    <label class="col-sm-4 control-label">Customer Address: </label>
+											    <div class="col-sm-8">
+											      <textarea name="" class="form-control" rows="3" readonly><?php if(isset($customer_info->customer_address)){echo $customer_info->customer_address;} ?></textarea>
+											    </div>
+											 </div>
+						  				</div>
+						  				<div class="col-md-6 col-sm-6">
+						  					<div class="form-group">
+											    <label class="col-sm-4 control-label">Invoice No. :</label>
+											   
+											    <div id="likes" class="col-sm-8">
+											    	<input type="text" name="invoice_no" class="form-control" value="<?php if(isset($replacement_data["invoice_no"])){echo $replacement_data["invoice_no"];}  ?>" readonly>
+												</div>
+												
+											</div>
+											<div class="form-group">
+											    <label class="col-sm-4 control-label">Customer Phone : </label>
+											    <div class="col-sm-8">
+											      <input name="" type="tel" class="form-control"placeholder="Phone " value="<?php if(isset($customer_info->customer_phone)){echo $customer_info->customer_phone;} ?>" readonly>
+											      
+											    </div>
+											</div>
+											<div class="form-group">
+											    <label class="col-sm-4 control-label">Notes : </label>
+											    <div class="col-sm-8">
+											      <textarea name="notes" class="form-control" rows="3"></textarea>
+											    </div>
+											</div>
+						  				</div>
+						  			</div>
+								
 								<div class="view_center_folwchart">
 									<div class='row'>
 							      		<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
@@ -244,7 +296,7 @@ error_reporting(0);
 <tr style="background:#EEEEEE;color:#000;">
 	
 	<th width="5%">Barcode</th>
-	<th width="8%">Product Description</th>
+	<th width="4%">Product Description</th>
 	<th width="5%">uom</th>
 	<th width="5%">Cost Per Unit</th>
 	<th width="5%">price</th>
@@ -252,14 +304,14 @@ error_reporting(0);
 	<th width="5%">Total</th>
 	<th width="5%">Replace Qty</th>
 
-	<th width="1%">&nbsp;</th>
-	<th width="1%">&nbsp;</th>
+	<th width="5%">Already Replace</th>
 
 	<th width="10%">Barcode</th>
-	<th width="10%">Product Description</th>
+	<th width="6%">Product Description</th>
 	<th width="5%">uom</th>
 	<th width="7%">Cost Per Unit</th>
 	<th width="8%">price</th>
+	<th width="5%">Avaliable Quantity</th>
 	<th width="5%">Quantity</th>
 	<th width="10%">Total</th>
 </tr>
@@ -293,39 +345,65 @@ error_reporting(0);
 		
 	</td>
 	<td>
-		<input type= "text" disabled="disabled" class="form-control" name="" value="<?php if(isset($replacement_data["price_per_unit"])){echo $replacement_data["price_per_unit"];}  ?>">
+		<input type= "text" disabled="disabled" step="0.1" class="form-control" name="" value="<?php if(isset($replacement_data["price_per_unit"])){echo $replacement_data["price_per_unit"];}  ?>">
 
-		<input type="hidden" name="previous_item[price_per_unit]" class="form-control" value="<?php if(isset($replacement_data["price_per_unit"])){echo $replacement_data["price_per_unit"];}  ?>">
+		<!-- <input type="hidden" name="previous_item[price_per_unit]" class="form-control" value="<?php //if(isset($replacement_data["price_per_unit"])){echo $replacement_data["price_per_unit"];}  ?>"> -->
+
+		<input type="hidden" min="0" name="previous_item[price_per_unit]" id="price2_1" class="form-control changesNo" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;"value="<?php if(isset($replacement_data["price_per_unit"])){echo $replacement_data["price_per_unit"];}  ?>">
 		
 	</td>
 	<td>
+	<?php 
+		$sub_quantity = $replacement_data["quantity"] - $total;
+	 ?>
 		<input type= "text" disabled="disabled" class="form-control" name="" value="<?php if(isset($replacement_data["quantity"])){echo $replacement_data["quantity"];}  ?>">
 
-		
+			
 		
 	</td>
 	<td>
-		<input name="" type="text" disabled="disabled" class="form-control" id="amountPaid1" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;" value="<?php if(isset($replacement_data["amount"])){echo $replacement_data["amount"];}  ?>">
+		<input name="" type="text" disabled="disabled" class="form-control" id="" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;" value="<?php if(isset($replacement_data["amount"])){echo $replacement_data["amount"];}  ?>">
 
-		<input type="hidden" name="previous_item[amount]" class="form-control" value="<?php if(isset($replacement_data["amount"])){echo $replacement_data["amount"];}  ?>">
+		<!-- <input type="hidden"  class="form-control" value="<?php// if(isset($replacement_data["amount"])){echo $replacement_data["amount"];}  ?>"> -->
+
+		<input type="hidden" min="0"name="previous_item[amount]"  id="total2_1" class="form-control totalLinePrice" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;"  readonly>
 		
 	</td>
-	<td><input type="number" id="replacement-quantity" min="0" max='<?php echo intval($replacement_data["quantity"]);?>' name="previous_item[quantity]" class="form-control"></td>
-	<td>&nbsp;</td>
-	<!-- Replaced By -->
-	<td>&nbsp;</td>
-	<td><input type="text" data-type="barcode" name="replaced_item[barcode]" id="itemNo_1" class="form-control autocomplete_txt" autocomplete="off"></td>
+	
+
+	<td><input type="number" min="0" max='<?php echo intval($sub_quantity);?>' name="previous_item[quantity]"  id="quantity2_1" class="form-control changesNo" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;"></td>
+	
 	
 	<td>
-		<input type="text" data-type="product_name" name="replaced_item[product_description]" id="itemName_1" class="form-control autocomplete_txt" autocomplete="off">
+	<input type="text" class="form-control"value="<?php 
+		if(!empty($total)) :
+			echo $total;
+		else :
+			echo 0;
+		endif; 
+	?>" readonly>
+	</td>
+	
+
+	
+	<!-- Replaced By -->
+
+
+	<td><input type="text" data-type="barcode" name="replaced_item[barcode]" id="itemNo_1" class="form-control autocomplete_txt" autocomplete="off">
+	
+
+	</td>
+	
+	<td>
+		<input type="text" data-type="product_name" name="replaced_item[product_description]" id="itemName_1" class="form-control autocomplete_txt" autocomplete="off"  required>
 		
 	</td>
 	<td>
-		<input type="text" data-type="uom" name="replaced_item[uom]" id="uom_1" class="form-control autocomplete_txt" autocomplete="off">
+		<input type="text" data-type="uom" name="replaced_item[uom]" id="uom_1" class="form-control autocomplete_txt" autocomplete="off" readonly>
 		
 	</td>
 	<td>
-		<input type="number" min="0" name="replaced_item[cost_per_unit]" id="price1_1" class="form-control changesNo" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;">
+		<input type="number" min="0" name="replaced_item[cost_per_unit]" id="price1_1" class="form-control changesNo" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;" readonly>
 		
 	</td>
 	<td>
@@ -333,11 +411,14 @@ error_reporting(0);
 		
 	</td>
 	<td>
-		<input type="number" min="0" name="replaced_item[quantity]" id="quantity_1" class="form-control changesNo" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;">
+		<input type="number" min="0" name="" id="quantity_1" class="form-control changesNo" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;" readonly="readonly">
 		
 	</td>
 	<td>
-		<input type="number" min="0" name="replaced_item[amount]" id="total_1" class="form-control totalLinePrice" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;">
+		<input type="number" min="0" name="replaced_item[quantity]" id="quantity4_1" class="form-control changesNo" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;">
+	</td>
+	<td>
+		<input type="number" min="0" name="replaced_item[amount]" id="total_1" class="form-control totalLinePrice" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;"  readonly>
 		
 	</td>
 </tr>
@@ -349,18 +430,12 @@ error_reporting(0);
 </table>
 							      		</div>
 							      	</div>
-							      	<!-- <div class='row'>
-							      		<div class='col-xs-12 col-sm-4 col-md-4 col-lg-4'>
-							      			<button class="btn btn-danger delete" type="button">- Delete</button>
-							      			<button class="btn btn-success addmore" type="button">+ Add More</button>
-							      		</div>
-							      	</div> -->
 							      	<div class='row'>	
 							      		<div class='col-xs-12 col-sm-8 col-md-8 col-lg-8'>
 							      			
 											
 							      		</div>
-							      		<div class='col-xs-12 col-sm-4 col-md-4 col-lg-4' style="padding-left:0">
+							      		<div class='col-xs-12 col-sm-4 col-md-4 col-lg-4' style="padding-left:0;margin: 0px -14px;">
 											<span class="form-inline">
 											<div class="form-group">
 													<label><!-- Total: &nbsp; --></label>
@@ -383,7 +458,7 @@ error_reporting(0);
 												<label>Vat Amount: &nbsp;</label>
 												<div class="input-group">
 													<div class="input-group-addon currency">৳</div>
-													<input value="" type="number" min="0" class="form-control" name="vat" id="taxAmount" placeholder="Vat" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;">
+													<input value="" type="number" min="0" class="form-control" name="vat" id="taxAmount" placeholder="Vat" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;" readonly>
 													
 												</div>
 											</div>
@@ -403,17 +478,17 @@ error_reporting(0);
 												</div>
 											</div>
 											<div class="form-group">
-												<label>Amount Paid: &nbsp;</label>
+												<!-- <label>Amount Paid: &nbsp;</label> -->
 												<div class="input-group">
-													<div class="input-group-addon currency">৳</div>
-													<input value="" type="number" min="0" class="form-control" name="" id="amountPaid" placeholder="Amount Paid" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;">
+													<!-- <div class="input-group-addon currency">৳</div> -->
+													<input value="" type="hidden" min="0" class="form-control" name="" id="amountPaid" placeholder="Amount Paid" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;">
 												</div>
 											</div>
 											<div class="form-group">
 												<label>Amount Due: &nbsp;</label>
 												<div class="input-group">
 													<div class="input-group-addon currency">৳</div>
-													<input value="" type="number"  class="form-control amountDue" name="due"  id="amountDue" placeholder="Amount Due" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;">
+													<input value="" type="number"  class="form-control amountDue" name="due"  id="amountDue" placeholder="Amount Due" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;"  readonly>
 												</div>
 											</div>
 										</span>
@@ -422,7 +497,9 @@ error_reporting(0);
 							      	</div>
 
 								</div>
-								<button type="submit" class="btn btn-success btn-lg" name="" style="margin: 15px auto;margin-left: 470px;">Confirm</button>
+								<div class="confim_button">
+									<a href="view_single_replacement.php"></a><button type="submit" id="submit" class="btn btn-success btn-lg" name="">Confirm</button></a>
+								</div>
 							</div>
 						</form>	
 							
@@ -441,7 +518,7 @@ error_reporting(0);
 	<script src="js/script_replace.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function(){
-		$("#replacement-quantity").keyup(function(){
+		$("#quantity2_1").keyup(function(){
 			var replace_max_value = $(this).attr('max');
 			var replace_quantity_value = $(this).val();
 			if(replace_quantity_value < 0){
@@ -451,7 +528,74 @@ error_reporting(0);
 				$(this).val(replace_max_value);
 			}
 		});
+
+
+		$('#itemNo_1').keyup(function(){
+			var search = $(this).val();
+
+			$.post("replace_item_search.php",{'search':search},function(data){
+				$('.show').text(data);
+			});
+
+		});
+		$('#quantity2_1').change(function(){
+			var prev_item_quantity = $('#quantity2_1').val();
+			if(prev_item_quantity > 0){
+				$('#submit').removeAttr('disabled');
+			}else if(prev_item_quantity <= 0){
+				$('#submit').attr('disabled','disabled');
+			}
+		});
+
+
+		$('#itemNo_1, #itemName_1').focusout(function(){
+			var replace_item_uom = $('#uom_1').val();
+			var item_quantity = $('#quantity_1').val();
+			if(replace_item_uom != '' ){
+				$('#submit').removeAttr('disabled');
+			}else{
+				$('#submit').attr('disabled','disabled');
+			}
+						
+			if(parseInt(item_quantity) > 0){
+				$('#submit').removeAttr('disabled');
+			}else if(parseInt(item_quantity) <= 0){
+				$('#submit').attr('disabled','disabled');
+			}
+		});
+
+		// $('#quantity_1').change(function(){
+		// 	var item_quantity = $('#quantity_1').val();
+		// 	alert('dfd');
+		// 	if(item_quantity > 0){
+		// 		$('#submit').removeAttr('disabled');
+		// 	}else if(item_quantity <= 0){
+
+		// 		$('#submit').attr('disabled','disabled');
+		// 	}
+		// });
+
+
+
 		
 	});
+</script>
+<script>
+	$('#quantity4_1').change(function(){
+		var quantity1 = $('#quantity_1').val();
+		var quantity4 = $('#quantity4_1').val();
+		$('#quantity4_1').attr({'max':quantity1,'min':0});
+	})
+
+	$('#quantity4_1').focusout(function(){
+		var quantity1 = $('#quantity_1').val();
+		var quantity4 = $('#quantity4_1').val();
+
+		if(parseInt(quantity1) < parseInt(quantity4)){
+			alert("Your store doesn't have sufficient stock");
+			$('#quantity4_1').val(quantity1);
+		}
+	})
+		
 </script>
 <?php include('includes/footer.php'); ?>
